@@ -3,22 +3,23 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using MahApps.Metro.Controls;
+using Project_management.helpers;
 using Project_management.objects;
+using ToastNotifications;
+using ToastNotifications.Messages;
 
-namespace Project_management;
+namespace Project_management.windows;
 
 public partial class EmployeeWindow : MetroWindow
 {
+    private readonly Notifier _notifier;
     public ObservableCollection<Employee> Employees { get; set; }
 
     public EmployeeWindow()
     {
         InitializeComponent();
-        Employees = new ObservableCollection<Employee>
-        {
-            new Employee("Jane", "Doe", new Department("Human resources"), "555-555-5555"),
-            new Employee("John", "Doe", new Department("It"), "555-555-5555"),
-        };
+        Employees = new ObservableCollection<Employee>(Employee.GetAll());
+        _notifier = ToastHelper.CreateToast(this);
         this.DataContext = this;
     }
 
@@ -45,18 +46,20 @@ public partial class EmployeeWindow : MetroWindow
         var firstName = FirstNameTextBox.Text;
         var lastName = LastNameTextBox.Text;
         var department = DepartmentTextBox.Text;
+        var mobilePhone = MobilePhoneTextBox.Text;
 
-        if (!string.IsNullOrWhiteSpace(firstName) && !string.IsNullOrWhiteSpace(lastName) &&
-            !string.IsNullOrWhiteSpace(department))
+        if (!string.IsNullOrWhiteSpace(firstName) && !string.IsNullOrWhiteSpace(lastName) && !string.IsNullOrWhiteSpace(department))
         {
-            var newPerson = new Employee(firstName, lastName, new Department(department), "0155050505050");
-            Employees.Add(newPerson);
+            var newEmployee = Employee.CreateEmployee(firstName, lastName, Department.FindOrCreateByTitle(department), mobilePhone);
+            Employees.Add(newEmployee);
 
             FirstNameTextBox.Text = string.Empty;
             LastNameTextBox.Text = string.Empty;
             DepartmentTextBox.Text = string.Empty;
+            MobilePhoneTextBox.Text = string.Empty;
             this.Title = "Mitglieder";
             ToggleFormAreaVisibility();
+            ShowSuccessToast("Mitglied wurde erfolgreich hinzugefügt.");
         }
         else
         {
@@ -96,8 +99,26 @@ public partial class EmployeeWindow : MetroWindow
         LastNameTextBox.Text = string.Empty;
         DepartmentTextBox.Text = string.Empty;
         MobilePhoneTextBox.Text = string.Empty;
-        
+
         this.Title = "Mitglieder";
         ToggleFormAreaVisibility();
+    }
+
+    public void ShowSuccessToast(string message)
+    {
+        _notifier.ShowSuccess(message);
+    }
+
+    private void OnListViewSizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        double totalWidthOfOtherColumns = 0;
+        var gridView = (GridView)ListView.View;
+        for (var i = 0; i < gridView.Columns.Count - 1; i++)
+        {
+            totalWidthOfOtherColumns += gridView.Columns[i].ActualWidth;
+        }
+
+        var remainingWidth = ListView.ActualWidth - totalWidthOfOtherColumns - SystemParameters.VerticalScrollBarWidth;
+        gridView.Columns[4].Width = remainingWidth > 0 ? remainingWidth : 0;
     }
 }

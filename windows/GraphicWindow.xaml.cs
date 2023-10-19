@@ -1,9 +1,8 @@
 using System.Collections.ObjectModel;
-using System.Windows;
 using MahApps.Metro.Controls;
 using Project_management.objects;
 
-namespace Project_management;
+namespace Project_management.windows;
 
 public partial class GraphicWindow : MetroWindow
 {

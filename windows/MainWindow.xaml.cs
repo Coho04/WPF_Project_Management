@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using MahApps.Metro.Controls;
 
-namespace Project_management
+namespace Project_management.windows
 {
     public partial class MainWindow : MetroWindow
     {
@@ -12,8 +12,10 @@ namespace Project_management
 
         private void ProjectButton_Click(object sender, RoutedEventArgs e)
         {
-            var secondWindow = new ProjectWindow();
-            secondWindow.Show();
+            // var secondWindow = new ProjectWindow();
+            // secondWindow.Show();
+            var testWindow = new TestWindow();
+            testWindow.Show();
         }
 
         private void EmployeeButton_Click(object sender, RoutedEventArgs e)

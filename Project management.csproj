@@ -12,6 +12,43 @@
 
     <ItemGroup>
       <PackageReference Include="MahApps.Metro" Version="2.4.10" />
+      <PackageReference Include="SQLite" Version="3.13.0" />
+      <PackageReference Include="System.Data.SQLite" Version="1.0.115" />
+      <PackageReference Include="ToastNotifications" Version="2.5.1" />
+      <PackageReference Include="ToastNotifications.Messages" Version="2.5.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="images\woman_stockphoto.jpg" />
+      <Resource Include="images\woman_stockphoto.jpg" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Page Update="windows\ProjectWindow.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="windows\MainWindow.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="windows\EmployeeWindow.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="windows\DepartmentCreateWindow.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="windows\TestWindow.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
     </ItemGroup>
 
 </Project>
