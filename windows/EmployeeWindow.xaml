@@ -7,7 +7,7 @@
                  Title="Mitarbeiter" Height="450" Width="800"
                  mc:Ignorable="d" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Grid Name="ListArea" Visibility="Visible">
+        <Grid Name="ListArea" Visibility="Collapsed">
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*" />
                 <RowDefinition Height="8*" />
@@ -25,11 +25,11 @@
                 <ListView ItemsSource="{Binding Employees}" Name="ListView" SizeChanged="OnListViewSizeChanged">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="First Name" Width="120" DisplayMemberBinding="{Binding FirstName}" />
-                            <GridViewColumn Header="Last Name" Width="120" DisplayMemberBinding="{Binding LastName}" />
-                            <GridViewColumn Header="Department" Width="120"
+                            <GridViewColumn Header="Vorname" Width="120" DisplayMemberBinding="{Binding FirstName}" />
+                            <GridViewColumn Header="Nachname" Width="120" DisplayMemberBinding="{Binding LastName}" />
+                            <GridViewColumn Header="Abteilung" Width="120"
                                             DisplayMemberBinding="{Binding Department.Title}" />
-                            <GridViewColumn Header="Mobile Phone" Width="120"
+                            <GridViewColumn Header="Telefon" Width="120"
                                             DisplayMemberBinding="{Binding MobilePhone}" />
                             <GridViewColumn Header="Actions" Width="Auto">
                                 <GridViewColumn.CellTemplate>
@@ -46,13 +46,13 @@
                 </ListView>
             </Border>
         </Grid>
-        <Grid Name="FormArea" Visibility="Collapsed">
+        <Grid Name="FormArea" Visibility="Visible">
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*" />
                 <RowDefinition Height="8*" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
-                <Button Name="BackButton" Content="Zurück" Width="150" Height="Auto"
+                <Button Content="Zurück" Width="150" Height="Auto"
                         VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10" Padding="10"
                         Click="CancelCreateEmployeeButton_Click" />
             </Grid>
@@ -74,10 +74,22 @@
                         <RowDefinition Height="1.5*" />
                         <RowDefinition Height="1.5*" />
                         <RowDefinition Height="1.5*" />
-                        <RowDefinition Height="5*" />
+                        <RowDefinition Height="1.5*" />
+                        <RowDefinition Height="4*" />
                     </Grid.RowDefinitions>
+                    
+                    <Grid Grid.Row="0" Visibility="Hidden" Name="IdTextArea" Margin="20,10,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*" />
+                            <ColumnDefinition Width="7*" />
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Content="Id:" />
+                        <TextBox Grid.Column="1" Name="IdTextBox" GotFocus="TextBox_GotFocus"
+                                 LostFocus="TextBox_LostFocus"
+                                 Text="1" Foreground="Gray" />
+                    </Grid>
 
-                    <Grid Grid.Row="0" Margin="20,10,0,10">
+                    <Grid Grid.Row="1" Margin="20,10,0,10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="3*" />
                             <ColumnDefinition Width="7*" />
@@ -87,7 +99,7 @@
                                  LostFocus="TextBox_LostFocus"
                                  Text="John" Foreground="Gray" />
                     </Grid>
-                    <Grid Grid.Row="1" Margin="20,10,0,10">
+                    <Grid Grid.Row="2" Margin="20,10,0,10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="3*" />
                             <ColumnDefinition Width="7*" />
@@ -97,17 +109,37 @@
                                  LostFocus="TextBox_LostFocus"
                                  Text="Doe" Foreground="Gray" />
                     </Grid>
-                    <Grid Grid.Row="2" Margin="20,10,0,10">
+                    <Grid Grid.Row="3" Margin="20,10,0,10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="3*" />
-                            <ColumnDefinition Width="7*" />
+                            <ColumnDefinition Width="5*" />
+                            <ColumnDefinition Width="2*" />
                         </Grid.ColumnDefinitions>
                         <Label Grid.Column="0" Content="Abteilung" />
-                        <TextBox Grid.Column="1" Name="DepartmentTextBox" GotFocus="TextBox_GotFocus"
-                                 LostFocus="TextBox_LostFocus"
-                                 Text="Personal" Foreground="Gray" />
+                        <!-- <TextBox Grid.Column="1" Name="DepartmentTextBox" GotFocus="TextBox_GotFocus" -->
+                        <!--          LostFocus="TextBox_LostFocus" -->
+                        <!--          Text="Personal" Foreground="Gray" /> -->
+                        
+                        <ComboBox  Grid.Column="1" Name="DepartmentComboBox" Margin="0,0,0,10" SelectedValuePath="Id" Padding="10"
+                                   GotFocus="TextBox_GotFocus"
+                                   LostFocus="TextBox_LostFocus"
+                                   ItemsSource="{Binding Departments}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
+                                        <Rectangle Fill="{Binding Title}" Width="16" Height="16" Margin="0,2,5,2" />
+                                        <TextBlock Text="{Binding Title}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <Button Grid.Column="2" Width="40" Height="40" VerticalAlignment="Center" HorizontalAlignment="Right" Click="AddDepartmentButton_Click">
+                            <!-- <StackPanel Orientation="Horizontal"> -->
+                                <Image Source="/images/plus_icon.png"/>
+                            <!-- </StackPanel> -->
+                        </Button>
                     </Grid>
-                    <Grid Grid.Row="3" Margin="20,10,0,10">
+                    <Grid Grid.Row="4" Margin="20,10,0,10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="3*" />
                             <ColumnDefinition Width="7*" />
@@ -128,7 +160,7 @@
                         <RowDefinition Height="3*" />
                     </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
-                        <Image Source="/images/woman_stockphoto.jpg" Width="300" Margin="0,0,10,0" />
+                        <Image Source="/images/woman_stockphoto.jpg" Width="300" Margin="0,0,10,0"/>
                     </Grid>
                     <Grid Grid.Row="1" VerticalAlignment="Center">
                         <Grid.ColumnDefinitions>

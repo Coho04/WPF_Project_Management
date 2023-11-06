@@ -22,6 +22,10 @@
       <None Remove="images\woman_stockphoto.jpg" />
       <Resource Include="images\woman_stockphoto.jpg" />
     </ItemGroup>
+    <ItemGroup>
+        <None Remove="images\plus_icon.png" />
+        <Resource Include="images\plus_icon.png" />
+    </ItemGroup>
 
     <ItemGroup>
       <Page Update="windows\ProjectWindow.xaml">
@@ -40,11 +44,6 @@
         <SubType>Designer</SubType>
       </Page>
       <Page Update="windows\DepartmentCreateWindow.xaml">
-        <Generator>MSBuild:Compile</Generator>
-        <XamlRuntime>Wpf</XamlRuntime>
-        <SubType>Designer</SubType>
-      </Page>
-      <Page Update="windows\TestWindow.xaml">
         <Generator>MSBuild:Compile</Generator>
         <XamlRuntime>Wpf</XamlRuntime>
         <SubType>Designer</SubType>

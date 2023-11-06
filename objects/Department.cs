@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Data.SQLite;
 using Project_management.helpers;
 
@@ -11,8 +12,8 @@ public class Department
 
     public Department(int id, string title)
     {
-        this.Id = id;
-        this.Title = title;
+        Id = id;
+        Title = title;
     }
 
     public static Department GetById(int id)
@@ -26,6 +27,7 @@ public class Department
             var title = reader.GetString(1);
             return new Department(0, title);
         }
+
         connection.Close();
         return null;
     }
@@ -42,12 +44,25 @@ public class Department
         return new Department(id, title);
     }
 
+    public static List<Department> GetAll()
+    {
+        var departments = new List<Department>();
+        var command = new SQLiteCommand("SELECT * FROM Department;", DatabaseHelper.GetConnection());
+        var reader = command.ExecuteReader();
+        while (reader.Read())
+        {
+            departments.Add(new Department(reader.GetInt32(0), reader.GetString(1)));
+        }
+
+        return departments;
+    }
+
     public static Department FindOrCreateByTitle(string title)
     {
         var connection = new SQLiteConnection(DatabaseHelper.ConnectionString);
         connection.Open();
 
-        string findQuery = "SELECT Id FROM Department WHERE Title = @Title;";
+        var findQuery = "SELECT Id FROM Department WHERE Title = @Title;";
         var findCommand = new SQLiteCommand(findQuery, connection);
         findCommand.Parameters.AddWithValue("@Title", title);
         var result = findCommand.ExecuteScalar();
@@ -56,10 +71,11 @@ public class Department
             return new Department(Convert.ToInt32(result), title);
         }
 
-        string insertQuery = "INSERT INTO Department (Title) VALUES (@Title); SELECT last_insert_rowid();";
+        var insertQuery = "INSERT INTO Department (Title) VALUES (@Title); SELECT last_insert_rowid();";
         var insertCommand = new SQLiteCommand(insertQuery, connection);
         insertCommand.Parameters.AddWithValue("@Title", title);
-        long lastId = (long)insertCommand.ExecuteScalar();
+        var lastId = (long)insertCommand.ExecuteScalar();
+        connection.Close();
         return new Department((int)lastId, title);
     }
 }

@@ -4,46 +4,165 @@
                  xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                 Title="Projekte" Width="800" Height="450" WindowStyle="SingleBorderWindow"
-                 mc:Ignorable="d" WindowStartupLocation="CenterScreen"
-                 ResizeMode="CanMinimize">
+                 xmlns:providers="clr-namespace:Project_management.providers"
+                 Title="Projekte" Height="450" Width="800"
+                 mc:Ignorable="d" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="2*" />
-            <RowDefinition Height="8*" />
-        </Grid.RowDefinitions>
-
-        <Grid Grid.Row="0">
-            <Button Width="150" Height="40" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0,10,0"
-                    Click="AddProjectButton_Click">
-                <StackPanel Orientation="Horizontal">
-                    <!-- <Image Source="add_person_icon.png" Width="20" Height="20" Margin="0,0,10,0" /> -->
-                    <TextBlock Text="Hinzufügen" VerticalAlignment="Center" />
-                </StackPanel>
-            </Button>
+        <Grid Name="ListArea" Visibility="Visible">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="8*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <Button Width="150" Height="40" VerticalAlignment="Center" HorizontalAlignment="Right"
+                        Margin="10,0,10,0" Click="AddProjectButton_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <!-- <Image Source="add_person_icon.png" Width="20" Height="20" Margin="0,0,10,0" /> -->
+                        <TextBlock Text="Hinzufügen" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+            <DataGrid AutoGenerateColumns="False" Name="List" Grid.Row="1"
+                      ItemsSource="{Binding Projects}" CanUserAddRows="False" CanUserDeleteRows="False"
+                      Margin="10,0,10,10">
+                <DataGrid.Columns>
+                    <!-- <DataGridTextColumn Header="Nummer" Binding="{Binding Id}" Width="*" /> -->
+                    <DataGridTextColumn Header="Titel" Binding="{Binding Title}" Width="*" />
+                    <DataGridTextColumn Header="StartDatum" Binding="{Binding StartDate}" Width="*" />
+                    <DataGridTextColumn Header="EndDatum" Binding="{Binding EndDate}" Width="1*" />
+                    <DataGridTextColumn Header="Manager" Binding="{Binding Manager.FirstName}" Width="*" />
+                    <DataGridTemplateColumn Header="Aktionen" Width="Auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="Bearbeiten" Margin="10" Click="ProjectEditButton_Click" />
+                                    <Button Content="Löschen" Margin="10" Click="ProjectDeleteButton_Click" />
+                                    <Button Content="Grafik" Margin="10" Click="ProjectGraphicButton_Click" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
-        <Border BorderBrush="Black" BorderThickness="0, 1,0,0" Grid.Row="1" Margin="2.5,0,2.5,0">
-            <ListView ItemsSource="{Binding Projects}">
-                <ListView.View>
-                    <GridView>
-                        <GridViewColumn Header="Titel" Width="Auto" DisplayMemberBinding="{Binding Title}" />
-                        <GridViewColumn Header="StartDatum" Width="Auto" DisplayMemberBinding="{Binding StartDate}" />
-                        <GridViewColumn Header="EndDatum" Width="Auto" DisplayMemberBinding="{Binding EndDate}" />
-                        <GridViewColumn Header="Manager" Width="Auto" DisplayMemberBinding="{Binding Manager.FirstName}" />
-                        <GridViewColumn Header="Aktionen" Width="Auto">
-                            <GridViewColumn.CellTemplate>
+
+        <Grid Name="FormArea" Visibility="Collapsed">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Margin="10,10,10,-10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0" Name="BackButton" Content="Zurück" Width="150" VerticalAlignment="Center"
+                        Click="CancelCreateProjectButton_Click" HorizontalAlignment="Left" Padding="10" />
+                <Button Grid.Column="1" Name="CreateProjectButton" Content="Speichern" Width="150"
+                        Click="CreateProjectButton_Click"
+                        VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10" />
+            </Grid>
+            <Grid Grid.Row="1" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0" Grid.Column="0" Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" VerticalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Content="Title" />
+                        <TextBox Grid.Row="1" Name="TitleTextBox" Text="Project A" Foreground="Gray" Margin="0,0,0,10"
+                                 providers:ExtraInfoProvider.ExtraInfo="Project A"
+                                 GotFocus="TextBox_GotFocus"
+                                 LostFocus="TextBox_LostFocus" />
+                    </Grid>
+                    <Grid Grid.Row="1" VerticalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Content="Start Datum" />
+                        <DatePicker Grid.Row="1" Name="StartDateTextBox" Text="20.09.2023" Foreground="Gray"
+                                    Margin="0,0,0,10" providers:ExtraInfoProvider.ExtraInfo="20.09.2023"
+                                    GotFocus="TextBox_GotFocus"
+                                    LostFocus="TextBox_LostFocus" />
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Row="0" Grid.Column="1" Margin="10">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" VerticalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Content="Manager" />
+                        <ComboBox Grid.Row="1" Name="EmployeeComboBox" Margin="0,0,0,10" SelectedValuePath="Id"
+                                  GotFocus="TextBox_GotFocus"
+                                  LostFocus="TextBox_LostFocus"
+                                  ItemsSource="{Binding Employees}">
+                            <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                        <Button Content="Bearbeiten" Margin="10" Click="ProjectEditButton_Click" />
-                                        <Button Content="Löschen" Margin="10" Click="ProjectDeleteButton_Click" />
-                                        <Button Content="Grafik" Margin="10" Click="ProjectGraphicButton_Click" />
+                                        <Rectangle Fill="{Binding FullName}" Width="16" Height="16" Margin="0,2,5,2" />
+                                        <TextBlock Text="{Binding FullName}" />
                                     </StackPanel>
                                 </DataTemplate>
-                            </GridViewColumn.CellTemplate>
-                        </GridViewColumn>
-                    </GridView>
-                </ListView.View>
-            </ListView>
-        </Border>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </Grid>
+                    <Grid Grid.Row="1" VerticalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Label Grid.Row="0" Content="End Datum" />
+                        <DatePicker Grid.Row="1" Name="EndDateTextBox" Text="20.10.2023" Foreground="Gray"
+                                    Margin="0,0,0,10"
+                                    providers:ExtraInfoProvider.ExtraInfo="20.10.2023"
+                                    GotFocus="TextBox_GotFocus"
+                                    LostFocus="TextBox_LostFocus" />
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.ColumnSpan="2" Grid.Row="1">
+                    <Button Width="120" Height="30" VerticalAlignment="Center" HorizontalAlignment="Right"
+                            Margin="10,0,10,0" Click="AddTaskButton_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Aufgabe hinzufügen" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+
+                <DataGrid Grid.Row="2" Grid.ColumnSpan="2" Name="TasksDataGrid" AutoGenerateColumns="False"
+                          ItemsSource="{Binding ProjectBuilder.TaskBuilders}" CanUserAddRows="False"
+                          CanUserDeleteRows="False"
+                          Margin="10,20,10,10">
+                    <DataGrid.Columns>
+                        <!-- <DataGridTextColumn Header="Nummer" Binding="{Binding Id}" Width="*" /> -->
+                        <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="*" />
+                        <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*" />
+                        <DataGridTextColumn Header="Dauer" Binding="{Binding Duration}" Width="*" />
+                        <DataGridTextColumn Header="Vorgänger" Binding="{Binding Parent}" Width="*" />
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Grid>
     </Grid>
 </mah:MetroWindow>

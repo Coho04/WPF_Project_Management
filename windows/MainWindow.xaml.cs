@@ -3,25 +3,28 @@ using MahApps.Metro.Controls;
 
 namespace Project_management.windows
 {
-    public partial class MainWindow : MetroWindow
+    public partial class MainWindow
     {
+        private MetroWindow _projectWindow;
+        private MetroWindow _employeeWindow;
+
         public MainWindow()
         {
             InitializeComponent();
+            _projectWindow = new ProjectWindow();
+            _employeeWindow = new EmployeeWindow();
         }
 
         private void ProjectButton_Click(object sender, RoutedEventArgs e)
         {
-            // var secondWindow = new ProjectWindow();
-            // secondWindow.Show();
-            var testWindow = new TestWindow();
-            testWindow.Show();
+            _projectWindow.Show();
+            _projectWindow.Activate();
         }
 
         private void EmployeeButton_Click(object sender, RoutedEventArgs e)
         {
-            var thirdWindow = new EmployeeWindow();
-            thirdWindow.Show();
+            _employeeWindow.Show();
+            _employeeWindow.Activate();
         }
     }
 }

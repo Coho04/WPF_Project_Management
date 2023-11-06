@@ -1,29 +1,19 @@
-using System.Collections.ObjectModel;
-using MahApps.Metro.Controls;
+using System;
+using System.Collections.Generic;
 using Project_management.objects;
 
 namespace Project_management.windows;
 
-public partial class GraphicWindow : MetroWindow
+public partial class GraphicWindow
 {
-    public ObservableCollection<Task> Tasks { get; set; }
+    public List<Task> Tasks { get; set; }
 
-    public GraphicWindow()
+    public GraphicWindow(Project project)
     {
-        Task task1 = new Task("1", "Task 1", 10, null);
-        Task task2 = new Task("2", "Task 2", 5, task1);
-        Task task3 = new Task("3", "Task 3", 5, task2);
-        Task task4 = new Task("4", "Task 4", 5, task3);
-
-
-        Tasks = new ObservableCollection<Task>
-        {
-            task1,
-            task2,
-            task3,
-            task4
-        };
-
         InitializeComponent();
+        Tasks = project.GetTasks();
+        ganttCanvas.Tasks = Tasks;
+        ganttCanvas.ProjectStartDate = DateTime.Now.Date;
+        ganttCanvas.Project = project;
     }
 }

@@ -5,26 +5,28 @@ using Project_management.helpers;
 
 namespace Project_management.objects;
 
-public class Employee
+public class Employee 
 {
+ 
     public int Id { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public Department Department { get; set; }
     public string MobilePhone { get; set; }
 
-    public Employee(int id, string firstName, string lastName, Department department, string mobilePhone)
+    public string FullName => $"{FirstName} {LastName}";
+
+    public Employee(int id, string firstName, string lastName, Department department, string mobilePhone) 
     {
-        this.Id = id;
-        this.FirstName = firstName;
-        this.LastName = lastName;
-        this.Department = department;
-        this.MobilePhone = mobilePhone;
+        Id = id;
+        FirstName = firstName;
+        LastName = lastName;
+        Department = department;
+        MobilePhone = mobilePhone;
     }
 
     public static Employee CreateEmployee(string firstName, string lastName, Department department, string mobilePhone)
     {
-        //TODO: Get last Id from db;
         var connection = DatabaseHelper.GetConnection();
         var insertQuery = "INSERT INTO Employee (firstname, lastname, department_id, mobile_phone)" +
                           " VALUES (@FirstName, @LastName, @DepartmentId, @MobilePhone);" +
@@ -55,21 +57,46 @@ public class Employee
             var employee = new Employee(id, firstName, lastName, department, mobilePhone);
             employees.Add(employee);
         }
+
         return employees;
     }
 
     public static Employee GetById(int id)
     {
-        var command = new SQLiteCommand("SELECT * FROM Employee where id = " + id, DatabaseHelper.GetConnection());
-        var reader = command.ExecuteReader();
-        while (reader.Read())
+        var connection = DatabaseHelper.GetConnection();
+        var command = new SQLiteCommand("SELECT * FROM Employee where id = " + id, connection);
+        Employee employee = null;
+        using (var reader = command.ExecuteReader())
         {
-            var firstName = reader.GetString(1);
-            var lastName = reader.GetString(2);
-            var department = Department.GetById(reader.GetInt32(3));
-            var mobilePhone = reader.GetString(4);
-            return new Employee(id, firstName, lastName, department, mobilePhone);
-        }
-        return null;
+            while (reader.Read())
+            {
+                var firstName = reader.GetString(1);
+                var lastName = reader.GetString(2);
+                var department = Department.GetById(reader.GetInt32(3));
+                var mobilePhone = reader.GetString(4);
+                employee = new Employee(id, firstName, lastName, department, mobilePhone);
+            }
+        } 
+        connection.Close();
+        return employee;
+    }
+
+    public static void UpdateEmployee(string firstname, string lastname, Department department, string mobilePhone, int id)
+    {
+        var connection = DatabaseHelper.GetConnection();
+        var updateQuery = "UPDATE Employee SET firstname = '" + firstname + "', lastname = '" + lastname + "', department_id = " + department.Id + ", mobile_phone = '" + mobilePhone + "' WHERE id = " + id + ";";
+        var command = new SQLiteCommand(updateQuery, connection);
+        command.ExecuteNonQuery();
+        connection.Close();
+    }
+
+    public void DeleteEmployee()
+    {
+        var connection = DatabaseHelper.GetConnection();
+        var command = new SQLiteCommand("DELETE FROM Employee WHERE id = @Id", connection);
+        command.Parameters.AddWithValue("@Id", this.Id);
+        command.ExecuteNonQuery();
+        connection.Close();
+        Console.WriteLine("Mitarbeiter gelöscht.");
     }
 }

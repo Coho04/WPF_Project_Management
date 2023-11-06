@@ -6,10 +6,9 @@ namespace Project_management.helpers;
 
 public class DatabaseHelper
 {
-    public static readonly string DatabaseFileName = "project_management.sqlite";
+    private static readonly string DatabaseFileName = "project_management.sqlite";
 
-    public static readonly string DatabaseFilePath =
-        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, DatabaseFileName);
+    private static readonly string DatabaseFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, DatabaseFileName);
 
     public static readonly string ConnectionString = $"Data Source={DatabaseFilePath};Version=3;";
 
@@ -22,7 +21,7 @@ public class DatabaseHelper
 
     public static void CheckAndCreateDatabase()
     {
-        var databaseFilePath = DatabaseHelper.DatabaseFilePath;
+        var databaseFilePath = DatabaseFilePath;
         if (!File.Exists(databaseFilePath))
         {
             SQLiteConnection.CreateFile(databaseFilePath);
@@ -33,7 +32,7 @@ public class DatabaseHelper
             Console.WriteLine("Datenbankdatei existiert bereits.");
         }
 
-        var connection = new SQLiteConnection(DatabaseHelper.ConnectionString);
+        var connection = new SQLiteConnection(ConnectionString);
         connection.Open();
         CreateTable(connection, @"
                 CREATE TABLE IF NOT EXISTS Department(
