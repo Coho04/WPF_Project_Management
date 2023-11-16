@@ -6,25 +6,19 @@ namespace Project_management.helpers;
 
 public class DatabaseHelper
 {
-    private static readonly string DatabaseFileName = "project_management.sqlite";
-
-    private static readonly string DatabaseFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, DatabaseFileName);
-
-    public static readonly string ConnectionString = $"Data Source={DatabaseFilePath};Version=3;";
+    
+    private static readonly string DatabaseFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "project_management.sqlite");
 
     public static SQLiteConnection GetConnection()
     {
-        var connection = new SQLiteConnection(ConnectionString);
-        connection.Open();
-        return connection;
+        return new SQLiteConnection($"Data Source={DatabaseFilePath};Version=3;");
     }
 
     public static void CheckAndCreateDatabase()
     {
-        var databaseFilePath = DatabaseFilePath;
-        if (!File.Exists(databaseFilePath))
+        if (!File.Exists(DatabaseFilePath))
         {
-            SQLiteConnection.CreateFile(databaseFilePath);
+            SQLiteConnection.CreateFile(DatabaseFilePath);
             Console.WriteLine("Datenbankdatei erstellt.");
         }
         else
@@ -32,8 +26,7 @@ public class DatabaseHelper
             Console.WriteLine("Datenbankdatei existiert bereits.");
         }
 
-        var connection = new SQLiteConnection(ConnectionString);
-        connection.Open();
+        var connection = GetConnection().OpenAndReturn();
         CreateTable(connection, @"
                 CREATE TABLE IF NOT EXISTS Department(
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -66,6 +59,7 @@ public class DatabaseHelper
                     title TEXT NOT NULL,
                     description TEXT NOT NULL,
                     duration INTEGER NOT NULL,
+                    type TEXT NOT NULL,
                     parent_id INTEGER,
                     project_id INTEGER NOT NULL,
                     FOREIGN KEY (parent_id) REFERENCES Task(id),

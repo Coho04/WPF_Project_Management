@@ -1,0 +1,123 @@
+<Page x:Class="Project_management.ui.pages.project.CreateOrUpdate"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:providers="clr-namespace:Project_management.providers"
+      xmlns:helpers="clr-namespace:Project_management.helpers"
+      mc:Ignorable="d" Height="550" Width="1080"
+      Style="{DynamicResource MahApps.Styles.Page}"
+      DataContext="{Binding RelativeSource={RelativeSource Self}}"
+      Title="CreateOrUpdate">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="8*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0" Margin="10,0,10,-10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="Zurück" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left"
+                    BorderBrush="Black" BorderThickness="1" Click="CancelButton_Click" />
+            <Button Grid.Column="1" Content="Speichern" Width="150"
+                    Click="SaveButton_Click"
+                    VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10" />
+        </Grid>
+        <Grid Grid.Row="1" Margin="10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Grid.Column="0" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" VerticalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Content="Title" />
+                    <TextBox Grid.Row="1" Name="TitleTextBox" Text="Project A" Foreground="Gray" Margin="0,0,0,10"
+                             providers:ExtraInfoProvider.ExtraInfo="Project A" />
+                </Grid>
+                <Grid Grid.Row="1" VerticalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Content="Start Datum" />
+                    <DatePicker Grid.Row="1" Name="StartDateTextBox" Text="20.09.2023" Foreground="Gray"
+                                Margin="0,0,0,10" providers:ExtraInfoProvider.ExtraInfo="20.09.2023" />
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Row="0" Grid.Column="1" Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" VerticalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Content="Manager" />
+                    <ComboBox Grid.Row="1" Name="EmployeeComboBox" Margin="0,0,0,10" SelectedValuePath="Id"
+                              ItemsSource="{Binding Employees}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Rectangle Fill="{Binding FullName}" Width="16" Height="16" Margin="0,2,5,2" />
+                                    <TextBlock Text="{Binding FullName}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                </Grid>
+                <Grid Grid.Row="1" VerticalAlignment="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Label Grid.Row="0" Content="End Datum" />
+                    <DatePicker Grid.Row="1" Name="EndDateTextBox" Text="20.10.2023" Foreground="Gray"
+                                Margin="0,0,0,10"
+                                providers:ExtraInfoProvider.ExtraInfo="20.10.2023"
+                                />
+                </Grid>
+            </Grid>
+
+            <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1">
+                <Button Width="150" Height="40" VerticalAlignment="Center" HorizontalAlignment="Right"
+                        Margin="10,0,10,0" Click="AddTaskButton_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Aufgabe hinzufügen" VerticalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+            </Grid>
+
+            <DataGrid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Name="TasksDataGrid" AutoGenerateColumns="False"
+                      ItemsSource="{Binding Tasks}" CanUserAddRows="False"
+                      CanUserDeleteRows="False"
+                      Margin="10,20,10,10">
+                <DataGrid.Columns>
+                    <!-- <DataGridTextColumn Header="Nummer" Binding="{Binding Id}" Width="*" /> -->
+                    <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="*" />
+                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*" />
+                    <DataGridTextColumn Header="Dauer" Binding="{Binding Duration}" Width="*" />
+                    <DataGridTextColumn Header="Vorgänger" Binding="{Binding Parent}" Width="*" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</Page>

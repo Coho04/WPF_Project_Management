@@ -1,0 +1,62 @@
+﻿<mah:MetroWindow x:Class="Project_management.ui.windows.MainWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 Title="Hauptfenster" Width="550" Height="650" mc:Ignorable="d"
+                 WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Image Source="/images/project_icon.png" />
+            <Button Grid.Row="1" Name="ProjectButton" Content="Projekte" Width="150" Height="50"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center" Margin="10" Click="ProjectButton_Click" />
+        </Grid>
+        <Grid Grid.Row="0" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Image Source="/images/employee_icon.png" />
+            <Button Grid.Row="1" Name="EmployeeButton" Content="Mitarbeiter" Width="150" Height="50"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center" Margin="10" Click="EmployeeButton_Click" />
+        </Grid>
+
+        <Grid Grid.Row="1" Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Image Source="/images/department_icon.png" />
+            <Button Grid.Row="1" Name="DepartmentButton" Content="Abteilungen" Width="150" Height="50"
+                    VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10"
+                    Click="DepartmentButton_Click"/>
+        </Grid>
+        <Grid Grid.Row="1" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Image Source="/images/settings.png" />
+            <Button Grid.Row="1" Name="SettingsButton" Width="150" Height="50" Content="Einstellungen"
+                    VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+            </Button>
+        </Grid>
+    </Grid>
+</mah:MetroWindow>

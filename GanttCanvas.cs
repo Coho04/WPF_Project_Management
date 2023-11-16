@@ -4,30 +4,33 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Project_management.enums.methods;
 using Project_management.objects;
 
 namespace Project_management
 {
     public class GanttCanvas : Canvas
     {
-        public List<Task> Tasks { get; set; }
-        private Dictionary<int, DateTime> TaskStartDates;
+        public List<Task>? Tasks { get; set; }
+        private Dictionary<int, DateTime>? _taskStartDates;
 
         public DateTime ProjectStartDate { get; set; }
-        public Project Project { get; set; }
+        public Project? Project { get; set; }
 
         protected override void OnRender(DrawingContext dc)
         {
-            TaskStartDates = new Dictionary<int, DateTime>();
+            _taskStartDates = new Dictionary<int, DateTime>();
             base.OnRender(dc);
             CalculateStartDates();
-            DrawTasks(dc);
             UpdateCanvasSize();
+            DrawTasks(dc);
+            DrawTimeAxis(dc);
+            DrawBorderLine(dc);
         }
 
         private void CalculateStartDates()
         {
-            var rootTasks = Tasks?.Where(t => t.Parent == null || t.Parent.Id == 0);
+            var rootTasks = Tasks?.Where(t => t?.Parent == null || t.Parent.Id == 0);
             if (rootTasks == null) return;
             foreach (var task in rootTasks)
             {
@@ -37,7 +40,7 @@ namespace Project_management
 
         private void CalculateStartDate(Task task, DateTime startDate)
         {
-            TaskStartDates[task.Id] = startDate;
+            _taskStartDates[task.Id] = startDate;
             var childTasks = Tasks?.Where(t => t.Parent != null && t.Parent.Id == task.Id);
             if (childTasks == null) return;
             foreach (var childTask in childTasks)
@@ -48,18 +51,15 @@ namespace Project_management
 
         private void UpdateCanvasSize()
         {
-            double maxWidth = 0;
-            double maxHeight = 0;
-
+            double maxWidth = 90;
+            double maxHeight = 50;
             Tasks.ToList().ForEach(task =>
             {
-                var taskRightEdge = TaskStartDates[task.Id].Subtract(ProjectStartDate).TotalDays * 20 +
-                                    task.Duration * 20;
-                var taskBottomEdge = maxWidth = Math.Max(maxWidth, taskRightEdge);
-                maxHeight = Math.Max(maxHeight, taskBottomEdge);
+                maxWidth += task.Duration * 20;
+                maxHeight += 40;
             });
-            Width = maxWidth + 100;
-            Height = maxHeight - 275;
+            Width = maxWidth > 1063 ? maxWidth : 1063;
+            Height = maxHeight > 510 ? maxHeight : 510;
         }
 
         private void DrawTasks(DrawingContext dc)
@@ -67,12 +67,14 @@ namespace Project_management
             double yOffset = 50;
             foreach (var task in Tasks.Select((x, i) => new { Value = x, Index = i }))
             {
-                var daysFromProjectStart = (TaskStartDates[task.Value.Id] - ProjectStartDate).Days;
+                if (_taskStartDates == null) return;
+                if (!_taskStartDates.ContainsKey(task.Value.Id)) return;
+                var daysFromProjectStart = (_taskStartDates[task.Value.Id] - ProjectStartDate).Days;
                 var xOffset = task.Index == 0 ? 80 : 80 + daysFromProjectStart * 20;
                 var pixelsPerDip = VisualTreeHelper.GetDpi(this).PixelsPerDip;
                 dc.DrawText(
                     new FormattedText(
-                        task.Value.Title,
+                        task.Value.Id.ToString(),
                         System.Globalization.CultureInfo.CurrentCulture,
                         FlowDirection.LeftToRight,
                         new Typeface("Arial"),
@@ -81,13 +83,11 @@ namespace Project_management
                         pixelsPerDip
                     ), new Point(5, yOffset));
                 var taskRect = new Rect(xOffset, yOffset, task.Value.Duration * 20, 30);
-                var taskColor = GetTaskColor(task.Value.Title);
+                var taskColor = TaskTypeMethodes.GetColor(task.Value);
+                Console.WriteLine(taskColor.ToString());
                 dc.DrawRectangle(taskColor, new Pen(Brushes.Black, 1), taskRect);
                 yOffset += 40;
             }
-
-            DrawTimeAxis(dc);
-            DrawBorderLine(dc);
         }
 
         private void DrawTimeAxis(DrawingContext dc)

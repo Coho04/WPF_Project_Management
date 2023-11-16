@@ -23,31 +23,112 @@
       <Resource Include="images\woman_stockphoto.jpg" />
     </ItemGroup>
     <ItemGroup>
+        <None Remove="images\settings.png" />
+        <Resource Include="images\settings.png" />
+    </ItemGroup>
+    <ItemGroup>
         <None Remove="images\plus_icon.png" />
         <Resource Include="images\plus_icon.png" />
     </ItemGroup>
+    <ItemGroup>
+        <None Remove="images\department_icon.png" />
+        <Resource Include="images\department_icon.png" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Remove="images\project_icon.png" />
+        <Resource Include="images\project_icon.png" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Remove="images\employee_icon.png" />
+        <Resource Include="images\employee_icon.png" />
+    </ItemGroup>
+
 
     <ItemGroup>
-      <Page Update="windows\ProjectWindow.xaml">
+      <Page Update="ui\windows\ProjectWindow.xaml">
         <Generator>MSBuild:Compile</Generator>
         <XamlRuntime>Wpf</XamlRuntime>
         <SubType>Designer</SubType>
       </Page>
-      <Page Update="windows\MainWindow.xaml">
+      <Page Update="ui\windows\MainWindow.xaml">
         <Generator>MSBuild:Compile</Generator>
         <XamlRuntime>Wpf</XamlRuntime>
         <SubType>Designer</SubType>
       </Page>
-      <Page Update="windows\EmployeeWindow.xaml">
+      <Page Update="ui\windows\DepartmentCreateWindow.xaml">
         <Generator>MSBuild:Compile</Generator>
         <XamlRuntime>Wpf</XamlRuntime>
         <SubType>Designer</SubType>
       </Page>
-      <Page Update="windows\DepartmentCreateWindow.xaml">
+      <Page Update="ui\windows\employee\EmployeeWindow.xaml">
         <Generator>MSBuild:Compile</Generator>
         <XamlRuntime>Wpf</XamlRuntime>
         <SubType>Designer</SubType>
       </Page>
+      <Page Update="ui\windows\CreateTaskWindow.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Update="ui\windows\DepartmentCreateWindow.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Update="ui\windows\GraphicWindow.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Update="ui\windows\MainWindow.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Update="ui\windows\ProjectWindow.xaml">
+        <Generator>MSBuild:Compile</Generator>
+      </Page>
+      <Page Update="ui\pages\employee\Index.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="ui\pages\employee\CreateOrUpdate.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+      <Page Update="ui\windows\EmployeeWindow.xaml">
+        <Generator>MSBuild:Compile</Generator>
+        <XamlRuntime>Wpf</XamlRuntime>
+        <SubType>Designer</SubType>
+      </Page>
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <EmbeddedResource Update="resources\lang\Strings.de-DE.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Strings.de-de.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="resources\lang\Strings.de-DE.resx">
+        <LastGenOutput>Strings.de-DE.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="resources\lang\Strings.en-US.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Strings.en-US.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <Compile Update="resources\lang\Strings.de-DE.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Strings.de-DE.resx</DependentUpon>
+      </Compile>
+      <Compile Update="resources\lang\Strings.en-US.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Strings.en-US.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <Folder Include="Properties\" />
     </ItemGroup>
 
 </Project>

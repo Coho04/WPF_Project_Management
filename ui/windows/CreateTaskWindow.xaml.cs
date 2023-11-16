@@ -3,7 +3,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using Project_management.builders;
 
-namespace Project_management.windows;
+namespace Project_management.ui.windows;
 
 public partial class CreateTaskWindow 
 {

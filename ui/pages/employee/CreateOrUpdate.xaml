@@ -1,0 +1,129 @@
+<Page x:Class="Project_management.ui.pages.employee.CreateOrUpdate"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d" Height="550" Width="1080"
+      Style="{DynamicResource MahApps.Styles.Page}"
+      xmlns:providers="clr-namespace:Project_management.providers"
+      DataContext="{Binding RelativeSource={RelativeSource Self}}"
+      Title="Create">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="8*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Button Content="Zurück" Width="150" Height="Auto"
+                    VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10" Padding="10"
+                    Click="OnCancelButtonClick" />
+        </Grid>
+        <Grid Grid.Row="1" Margin="10 , 0,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Column="0" HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1.5*" />
+                    <RowDefinition Height="1.5*" />
+                    <RowDefinition Height="1.5*" />
+                    <RowDefinition Height="1.5*" />
+                    <RowDefinition Height="1.5*" />
+                    <RowDefinition Height="4*" />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="1" Margin="0,10,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="7*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Content="Firstname" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBox Grid.Column="1" Name="FirstNameTextBox" providers:ExtraInfoProvider.ExtraInfo="John"
+                             VerticalContentAlignment="Center"
+                             Text="John" Foreground="Gray" />
+                </Grid>
+                <Grid Grid.Row="2" Margin="0,10,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="7*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Content="Lastname" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBox Grid.Column="1" Name="LastNameTextBox" providers:ExtraInfoProvider.ExtraInfo="Doe"
+                             VerticalContentAlignment="Center"
+                             Text="Doe" Foreground="Gray" />
+                </Grid>
+                <Grid Grid.Row="3" Margin="0,0, 0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="5*" />
+                        <ColumnDefinition Width="2*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Content="Abteilung" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <ComboBox Grid.Column="1" Name="DepartmentComboBox" VerticalAlignment="Center"
+                              SelectedValuePath="Id" Padding="10" ItemsSource="{Binding Departments}"
+                              VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left">
+                                    <Rectangle Fill="{Binding Title}" Width="16" Height="16" />
+                                    <TextBlock Text="{Binding Title}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <Button Grid.Column="2" Width="40" Height="40" VerticalAlignment="Center"
+                            HorizontalAlignment="Right" Click="OnAddDepartmentButtonClick">
+                        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                            <Image Source="/images/plus_icon.png"
+                                   Width="30"
+                                   Height="30"
+                                   HorizontalAlignment="Center"
+                                   VerticalAlignment="Center" />
+                        </StackPanel>
+                    </Button>
+                </Grid>
+                <Grid Grid.Row="4" Margin="0,10,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*" />
+                        <ColumnDefinition Width="7*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Content="Telefon" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <TextBox Grid.Column="1" Name="MobilePhoneTextBox"
+                             providers:ExtraInfoProvider.ExtraInfo="+49 176726863"
+                             VerticalContentAlignment="Center"
+                             Text="+49 176726863" Foreground="Gray" />
+                </Grid>
+            </Grid>
+            <Grid Grid.Column="1" HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="7*" />
+                    <RowDefinition Height="3*" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Image Source="/images/woman_stockphoto.jpg" Width="300" Margin="0,0,10,0" />
+                </Grid>
+                <Grid Grid.Row="1" VerticalAlignment="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="1" Content="Speichern" Width="150" Height="Auto"
+                            VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10" Padding="10"
+                            Click="OnSaveButtonClick" />
+                </Grid>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

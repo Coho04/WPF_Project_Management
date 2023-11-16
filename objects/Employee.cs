@@ -25,27 +25,11 @@ public class Employee
         MobilePhone = mobilePhone;
     }
 
-    public static Employee CreateEmployee(string firstName, string lastName, Department department, string mobilePhone)
-    {
-        var connection = DatabaseHelper.GetConnection();
-        var insertQuery = "INSERT INTO Employee (firstname, lastname, department_id, mobile_phone)" +
-                          " VALUES (@FirstName, @LastName, @DepartmentId, @MobilePhone);" +
-                          "SELECT last_insert_rowid();";
-        var command = new SQLiteCommand(insertQuery, connection);
-        command.Parameters.AddWithValue("@FirstName", firstName);
-        command.Parameters.AddWithValue("@LastName", lastName);
-        command.Parameters.AddWithValue("@DepartmentId", department.Id);
-        command.Parameters.AddWithValue("@MobilePhone", mobilePhone);
-        command.ExecuteNonQuery();
-        int id = Convert.ToInt32(command.ExecuteScalar());
-        connection.Close();
-        return new Employee(id, firstName, lastName, department, mobilePhone);
-    }
-
     public static List<Employee> GetAll()
     {
         var employees = new List<Employee>();
-        var command = new SQLiteCommand("SELECT * FROM Employee;", DatabaseHelper.GetConnection());
+        var connection = DatabaseHelper.GetConnection().OpenAndReturn();
+        var command = new SQLiteCommand("SELECT * FROM Employee;", connection);
         var reader = command.ExecuteReader();
         while (reader.Read())
         {
@@ -57,13 +41,13 @@ public class Employee
             var employee = new Employee(id, firstName, lastName, department, mobilePhone);
             employees.Add(employee);
         }
-
+        connection.Close();
         return employees;
     }
 
     public static Employee GetById(int id)
     {
-        var connection = DatabaseHelper.GetConnection();
+        var connection = DatabaseHelper.GetConnection().OpenAndReturn();
         var command = new SQLiteCommand("SELECT * FROM Employee where id = " + id, connection);
         Employee employee = null;
         using (var reader = command.ExecuteReader())
@@ -81,22 +65,37 @@ public class Employee
         return employee;
     }
 
-    public static void UpdateEmployee(string firstname, string lastname, Department department, string mobilePhone, int id)
+    public static Employee UpdateOrCreate(string firstName, string lastName, Department department, string mobilePhone, int? id = null)
     {
-        var connection = DatabaseHelper.GetConnection();
-        var updateQuery = "UPDATE Employee SET firstname = '" + firstname + "', lastname = '" + lastname + "', department_id = " + department.Id + ", mobile_phone = '" + mobilePhone + "' WHERE id = " + id + ";";
-        var command = new SQLiteCommand(updateQuery, connection);
+        var connection = DatabaseHelper.GetConnection().OpenAndReturn();
+        var command = new SQLiteCommand(connection);
+        if (id == null)
+        {
+            const string query = "INSERT INTO Employee (firstname, lastname, department_id, mobile_phone)" + " VALUES (@FirstName, @LastName, @DepartmentId, @MobilePhone);" + "SELECT last_insert_rowid();";
+            command.CommandText = query;
+            command.Parameters.AddWithValue("@FirstName", firstName);
+            command.Parameters.AddWithValue("@LastName", lastName);
+            command.Parameters.AddWithValue("@DepartmentId", department.Id);
+            command.Parameters.AddWithValue("@MobilePhone", mobilePhone);
+        }
+        else
+        {
+            var query = "UPDATE Employee SET firstname = '" + firstName + "', lastname = '" + lastName + "', department_id = " + department.Id + ", mobile_phone = '" + mobilePhone + "' WHERE id = " + id + ";";
+            command.CommandText = query;
+          
+        }
         command.ExecuteNonQuery();
+        id = Convert.ToInt32(command.ExecuteScalar());
         connection.Close();
+        return new Employee((int)id, firstName, lastName, department, mobilePhone);
     }
 
-    public void DeleteEmployee()
+    public void Delete()
     {
-        var connection = DatabaseHelper.GetConnection();
+        var connection = DatabaseHelper.GetConnection().OpenAndReturn();
         var command = new SQLiteCommand("DELETE FROM Employee WHERE id = @Id", connection);
         command.Parameters.AddWithValue("@Id", this.Id);
         command.ExecuteNonQuery();
         connection.Close();
-        Console.WriteLine("Mitarbeiter gelöscht.");
     }
 }

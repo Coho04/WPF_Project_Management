@@ -43,7 +43,7 @@ public class TaskBuilder
         Console.WriteLine(Duration);
         Console.WriteLine(Parent != null ? Parent : null);
         Console.WriteLine(projectId);
-        var connection = DatabaseHelper.GetConnection();
+        var connection = DatabaseHelper.GetConnection().OpenAndReturn();
         var insertQuery = "INSERT INTO Task (title, description, duration, parent_id, project_id)" +
                           " VALUES (@Title, @Description, @Duration, @ManagerId, @ProjectId);";
         var command = new SQLiteCommand(insertQuery, connection);

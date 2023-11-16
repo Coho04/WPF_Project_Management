@@ -8,20 +8,25 @@ namespace Project_management.builders;
 
 public class ProjectBuilder
 {
-    public ObservableCollection<TaskBuilder> TaskBuilders = new ObservableCollection<TaskBuilder>();
+    public ObservableCollection<TaskBuilder> TaskBuilders;
     private string Title;
     private DateTime StartDate;
     private DateTime EndDate;
     private Employee Manager;
+    
+    public ProjectBuilder()
+    {
+        TaskBuilders = new ObservableCollection<TaskBuilder>();
+    }
 
     public void SetTitle(string title)
     {
-        this.Title = title;
+        Title = title;
     }
 
     public void SetStartDate(DateTime startDate)
     {
-        this.StartDate = startDate;
+        StartDate = startDate;
     }
 
     public void SetEndDate(DateTime endDate)
@@ -29,16 +34,15 @@ public class ProjectBuilder
         this.EndDate = endDate;
     }
 
-    public ProjectBuilder SetManager(Employee manager)
+    public void SetManager(Employee manager)
     {
-        this.Manager = manager;
-        return this;
+        Manager = manager;
     }
 
     public Project Build()
     {
-        var connection = DatabaseHelper.GetConnection();
-        var insertQuery = "INSERT INTO Project (title, startdate, enddate, employee_id)" +
+        var connection = DatabaseHelper.GetConnection().OpenAndReturn();
+        const string insertQuery = "INSERT INTO Project (title, startdate, enddate, employee_id)" +
                           " VALUES (@Title, @StartDate, @EndDate, @Manager_Id);" +
                           "SELECT last_insert_rowid();";
         var command = new SQLiteCommand(insertQuery, connection);
@@ -47,9 +51,8 @@ public class ProjectBuilder
         command.Parameters.AddWithValue("@EndDate", EndDate);
         command.Parameters.AddWithValue("@Manager_Id", Manager.Id);
         command.ExecuteNonQuery();
-        int id = Convert.ToInt32(command.ExecuteScalar());
+        var id = Convert.ToInt32(command.ExecuteScalar());
         connection.Close();
-
         foreach (var taskBuilder in TaskBuilders)
         {
             taskBuilder.Build(id);

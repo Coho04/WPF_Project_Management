@@ -1,12 +1,15 @@
-using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using Project_management.objects;
 
-namespace Project_management.windows;
+namespace Project_management.ui.windows;
 
 public partial class DepartmentCreateWindow
 {
+    public delegate void DepartmentAddedEventHandler(object sender, Department department);
+    public event DepartmentAddedEventHandler? DepartmentAdded;
+    
     public DepartmentCreateWindow()
     {
         InitializeComponent();
@@ -14,23 +17,23 @@ public partial class DepartmentCreateWindow
 
     private void OnSaveButtonClick(object sender, RoutedEventArgs e)
     {
-        // Ihre Speicherlogik hier
-        Console.WriteLine("Speichern Button geklickt");
+        var department = Department.FindOrCreateByTitle(TitleTextBox.Text);
+        DepartmentAdded?.Invoke(this, department);
+        Close();
     }
-
 
     private void TextBox_GotFocus(object sender, RoutedEventArgs e)
     {
-        var textBox = sender as TextBox;
-        if (textBox == null || textBox.Foreground != Brushes.Gray) return;
+        if (sender is not TextBox textBox) return;
+        if (textBox.Foreground != Brushes.Gray) return;
         textBox.Text = string.Empty;
         textBox.Foreground = Brushes.Black;
     }
 
     private void TextBox_LostFocus(object sender, RoutedEventArgs e)
     {
-        var textBox = sender as TextBox;
-        if (textBox == null || !string.IsNullOrWhiteSpace(textBox.Text)) return;
+        if (sender is not TextBox textBox) return;
+        if (!string.IsNullOrWhiteSpace(textBox.Text)) return;
         textBox.Text = textBox.Name == TitleTextBox.Name ? "Title" : "";
         textBox.Foreground = Brushes.Gray;
     }

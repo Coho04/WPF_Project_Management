@@ -1,0 +1,49 @@
+<Page x:Class="Project_management.ui.pages.department.CreateOrUpdate"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      mc:Ignorable="d" Width="550" Height="650"
+      Style="{DynamicResource MahApps.Styles.Page}"
+      DataContext="{Binding RelativeSource={RelativeSource Self}}"
+      xmlns:providers="clr-namespace:Project_management.providers"
+      Title="Create">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="4*" />
+            <RowDefinition Height="4*" />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Button Content="Zurück" Width="150" Height="Auto"
+                    VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10" Padding="10"
+                    Click="OnCancelButtonClick" />
+        </Grid>
+        <Grid Grid.Row="1" VerticalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <Label Content="Title" VerticalAlignment="Center" HorizontalAlignment="Center" />
+            </Grid>
+            <Grid Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBox Name="FirstNameTextBox" TextAlignment="Center" Text="John" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Gray" Width="250" Height="50" providers:ExtraInfoProvider.ExtraInfo="Department"/>
+            </Grid>  
+        </Grid>
+          <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="1" HorizontalAlignment="Center">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button Content="Speichern" Width="150" Height="Auto"
+                        VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" Padding="10"
+                        Click="OnSaveButtonClick" />
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>

@@ -1,4 +1,4 @@
-<mah:MetroWindow x:Class="Project_management.windows.CreateTaskWindow"
+<mah:MetroWindow x:Class="Project_management.ui.windows.CreateTaskWindow"
                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                  xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
@@ -34,7 +34,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" Content="Title" />
-                <TextBox Grid.Row="1" Name="TitleTextBox" Text="20.10.2023" Foreground="Gray" Margin="0,0,0,10"
+                <TextBox Grid.Row="1" Name="TitleTextBox" Text="Erste Aufgabe" Foreground="Gray" Margin="0,0,0,10"
                          GotFocus="TextBox_GotFocus"
                          LostFocus="TextBox_LostFocus" />
             </Grid>
@@ -44,7 +44,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" Content="Beschreibung" />
-                <TextBox Grid.Row="1" Name="DescriptionTextBox" Text="20.10.2023" Foreground="Gray"
+                <TextBox Grid.Row="1" Name="DescriptionTextBox" Text="Lorem ipsum dolor" Foreground="Gray"
                          Margin="0,0,0,10"
                          GotFocus="TextBox_GotFocus"
                          LostFocus="TextBox_LostFocus" />
