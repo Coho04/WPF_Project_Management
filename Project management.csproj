@@ -19,30 +19,33 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Remove="images\woman_stockphoto.jpg" />
-      <Resource Include="images\woman_stockphoto.jpg" />
-    </ItemGroup>
-    <ItemGroup>
+        <None Remove="images\woman_stockphoto.jpg" />
+        <Resource Include="images\woman_stockphoto.jpg" />
         <None Remove="images\settings.png" />
         <Resource Include="images\settings.png" />
-    </ItemGroup>
-    <ItemGroup>
         <None Remove="images\plus_icon.png" />
         <Resource Include="images\plus_icon.png" />
-    </ItemGroup>
-    <ItemGroup>
         <None Remove="images\department_icon.png" />
         <Resource Include="images\department_icon.png" />
-    </ItemGroup>
-    <ItemGroup>
         <None Remove="images\project_icon.png" />
         <Resource Include="images\project_icon.png" />
-    </ItemGroup>
-    <ItemGroup>
         <None Remove="images\employee_icon.png" />
         <Resource Include="images\employee_icon.png" />
+        <None Remove="images\flags\German.png" />
+        <Resource Include="images\flags\German.png" />
+        <None Remove="images\flags\English.png" />
+        <Resource Include="images\flags\English.png" />
     </ItemGroup>
-
+    
+    <ItemGroup>
+        <None Remove="images\moon_icon.png" />
+        <Resource Include="images\moon_icon.png" />
+    </ItemGroup>
+    
+    <ItemGroup>
+        <None Remove="images\sun_icon.png" />
+        <Resource Include="images\sun_icon.png" />
+    </ItemGroup>
 
     <ItemGroup>
       <Page Update="ui\windows\ProjectWindow.xaml">
@@ -100,35 +103,28 @@
 
     <ItemGroup>
       <EmbeddedResource Update="resources\lang\Strings.de-DE.resx">
-        <Generator>ResXFileCodeGenerator</Generator>
-        <LastGenOutput>Strings.de-de.Designer.cs</LastGenOutput>
-      </EmbeddedResource>
-      <EmbeddedResource Update="resources\lang\Strings.de-DE.resx">
         <LastGenOutput>Strings.de-DE.Designer.cs</LastGenOutput>
       </EmbeddedResource>
-      <EmbeddedResource Update="resources\lang\Strings.en-US.resx">
-        <Generator>ResXFileCodeGenerator</Generator>
-        <LastGenOutput>Strings.en-US.Designer.cs</LastGenOutput>
+      <EmbeddedResource Update="Strings.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>Strings.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Strings.de-DE.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>Strings.de-DE.Designer.cs</LastGenOutput>
       </EmbeddedResource>
     </ItemGroup>
 
-
     <ItemGroup>
-      <Compile Update="resources\lang\Strings.de-DE.Designer.cs">
+      <Compile Update="Strings.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Strings.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Strings.de-DE.Designer.cs">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>Strings.de-DE.resx</DependentUpon>
       </Compile>
-      <Compile Update="resources\lang\Strings.en-US.Designer.cs">
-        <DesignTime>True</DesignTime>
-        <AutoGen>True</AutoGen>
-        <DependentUpon>Strings.en-US.resx</DependentUpon>
-      </Compile>
     </ItemGroup>
-
-
-    <ItemGroup>
-      <Folder Include="Properties\" />
-    </ItemGroup>
-
 </Project>

@@ -6,7 +6,7 @@
       mc:Ignorable="d" Height="550" Width="1080"
       Style="{DynamicResource MahApps.Styles.Page}"
       DataContext="{Binding RelativeSource={RelativeSource Self}}"
-      Title="Index">
+      Title="{x:Static properties:Strings.Index}" xmlns:properties="clr-namespace:Project_management">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*" />
@@ -19,32 +19,32 @@
                     Click="CreateButton_Click">
                 <StackPanel Orientation="Horizontal">
                     <!-- <Image Source="add_person_icon.png" Width="20" Height="20" Margin="0,0,10,0" /> -->
-                    <TextBlock Text="Hinzufügen" VerticalAlignment="Center" />
+                    <TextBlock Text="{x:Static properties:Strings.Add}" VerticalAlignment="Center" />
                 </StackPanel>
             </Button>
         </Grid>
-        <DataGrid AutoGenerateColumns="False" Name="List" Grid.Row="1"
+        <DataGrid AutoGenerateColumns="False" Grid.Row="1"
                   ItemsSource="{Binding Projects}" CanUserAddRows="False" CanUserDeleteRows="False"
                   Margin="10,0,10,10">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Nummer" Binding="{Binding Id}" Width="*" />
-                <DataGridTextColumn Header="Titel" Binding="{Binding Title}" Width="*" />
-                <DataGridTextColumn Header="StartDatum" Binding="{Binding StartDate}" Width="*" />
-                <DataGridTextColumn Header="EndDatum" Binding="{Binding EndDate}" Width="1*" />
-                <DataGridTextColumn Header="Manager" Binding="{Binding Manager.FirstName}" Width="*" />
-                <DataGridTemplateColumn Header="Aktionen" Width="Auto">
+                <DataGridTextColumn Header="{x:Static properties:Strings.Number}" Binding="{Binding Id}" Width="*" />
+                <DataGridTextColumn Header="{x:Static properties:Strings.Title}" Binding="{Binding Title}" Width="*" />
+                <DataGridTextColumn Header="{x:Static properties:Strings.StartDate}" Binding="{Binding StartDate}" Width="*" />
+                <DataGridTextColumn Header="{x:Static properties:Strings.EndDate}" Binding="{Binding EndDate}" Width="1*" />
+                <DataGridTextColumn Header="{x:Static properties:Strings.Manager}" Binding="{Binding Manager.FirstName}" Width="*" />
+                <DataGridTemplateColumn Header="{x:Static properties:Strings.Actions}" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Content="Bearbeiten" Margin="10" Click="EditButton_Click" />
-                                <Button Content="Löschen" Margin="10" Click="DeleteButton_Click" />
-                                <Button Content="Grafik" Margin="10" Click="GraphicButton_Click">
+                                <Button Content="{x:Static properties:Strings.Edit}" Margin="10" Click="EditButton_Click" />
+                                <Button Content="{x:Static properties:Strings.Delete}" Margin="10" Click="DeleteButton_Click" />
+                                <Button Content="{x:Static properties:Strings.Graphic}" Margin="10" Click="GraphicButton_Click">
                                     <Button.Style>
                                         <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
-                                            <Setter Property="Visibility" Value="Visible"/>
+                                            <Setter Property="Visibility" Value="Visible" />
                                             <Style.Triggers>
                                                 <DataTrigger Binding="{Binding Path=HasTasksProperty}" Value="False">
-                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Setter Property="Visibility" Value="Collapsed" />
                                                 </DataTrigger>
                                             </Style.Triggers>
                                         </Style>

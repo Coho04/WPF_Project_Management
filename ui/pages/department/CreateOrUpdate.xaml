@@ -6,8 +6,9 @@
       mc:Ignorable="d" Width="550" Height="650"
       Style="{DynamicResource MahApps.Styles.Page}"
       DataContext="{Binding RelativeSource={RelativeSource Self}}"
+      xmlns:properties="clr-namespace:Project_management"
       xmlns:providers="clr-namespace:Project_management.providers"
-      Title="Create">
+      Title="{x:Static properties:Strings.Create}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*" />
@@ -15,7 +16,7 @@
             <RowDefinition Height="4*" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <Button Content="Zurück" Width="150" Height="Auto"
+            <Button Content="{x:Static properties:Strings.Back}" Width="150" Height="Auto"
                     VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10" Padding="10"
                     Click="OnCancelButtonClick" />
         </Grid>
@@ -25,7 +26,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <Label Content="Title" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                <Label Content="{x:Static properties:Strings.Title}" VerticalAlignment="Center" HorizontalAlignment="Center" />
             </Grid>
             <Grid Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
                 <TextBox Name="FirstNameTextBox" TextAlignment="Center" Text="John" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Gray" Width="250" Height="50" providers:ExtraInfoProvider.ExtraInfo="Department"/>
@@ -40,7 +41,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Button Content="Speichern" Width="150" Height="Auto"
+                <Button Content="{x:Static properties:Strings.Save}" Width="150" Height="Auto"
                         VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" Padding="10"
                         Click="OnSaveButtonClick" />
             </Grid>

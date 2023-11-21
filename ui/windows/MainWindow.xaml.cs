@@ -1,17 +1,27 @@
-﻿using System.Windows;
-using MahApps.Metro.Controls;
+﻿using System.Globalization;
+using System.Threading;
+using System.Windows;
+using ControlzEx.Theming;
 
 namespace Project_management.ui.windows
 {
     public partial class MainWindow
     {
-        private MetroWindow _projectWindow;
-        private MetroWindow _employeeWindow;
+        private ProjectWindow _projectWindow;
+        private EmployeeWindow _employeeWindow;
+        private SettingsWindow _settingsWindow;
         public static DepartmentCreateWindow _departmentCreateWindow;
         public static DepartmentWindow _departmentWindow;
 
         public MainWindow()
         {
+            // var theme = ThemeManager.Current.DetectTheme(Application.Current);
+          
+
+            
+            
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
             InitializeComponent();
             _projectWindow = new ProjectWindow();
             _employeeWindow = new EmployeeWindow();
@@ -55,6 +65,19 @@ namespace Project_management.ui.windows
                 _employeeWindow.Show();
             }
             _employeeWindow.Activate();
+        }
+
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_settingsWindow == null || !_settingsWindow.IsLoaded)
+            {
+                _settingsWindow = new SettingsWindow();
+            }
+            if (!_settingsWindow.IsVisible)
+            {
+                _settingsWindow.Show();
+            }
+            _settingsWindow.Activate();
         }
     }
 }

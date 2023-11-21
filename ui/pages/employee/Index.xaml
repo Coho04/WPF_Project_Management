@@ -6,7 +6,8 @@
       mc:Ignorable="d" Height="550" Width="1080"
       Style="{DynamicResource MahApps.Styles.Page}"
       DataContext="{Binding RelativeSource={RelativeSource Self}}"
-      Title="Index">
+      xmlns:properties="clr-namespace:Project_management"
+      Title="{x:Static properties:Strings.Index}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*" />
@@ -16,7 +17,7 @@
             <Button Width="150" Height="40" VerticalAlignment="Center" HorizontalAlignment="Right"
                     Margin="10,0,10,0" Click="OnCreateButtonClick">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="Hinzufügen" VerticalAlignment="Center" />
+                    <TextBlock Text="{x:Static properties:Strings.Add}" VerticalAlignment="Center" />
                 </StackPanel>
             </Button>
         </Grid>
@@ -29,16 +30,16 @@
                 </ListView.ItemContainerStyle>
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="Vorname" Width="120" DisplayMemberBinding="{Binding FirstName}" />
-                        <GridViewColumn Header="Nachname" Width="120" DisplayMemberBinding="{Binding LastName}" />
-                        <GridViewColumn Header="Abteilung" Width="120" DisplayMemberBinding="{Binding Department.Title}" />
-                        <GridViewColumn Header="Telefon" Width="120" DisplayMemberBinding="{Binding MobilePhone}" />
-                        <GridViewColumn Header="Actions" Width="Auto">
+                        <GridViewColumn Header="{x:Static properties:Strings.FirstName}" Width="120" DisplayMemberBinding="{Binding FirstName}" />
+                        <GridViewColumn Header="{x:Static properties:Strings.LastName}" Width="120" DisplayMemberBinding="{Binding LastName}" />
+                        <GridViewColumn Header="{x:Static properties:Strings.Department}" Width="120" DisplayMemberBinding="{Binding Department.Title}" />
+                        <GridViewColumn Header="{x:Static properties:Strings.Phone}" Width="120" DisplayMemberBinding="{Binding MobilePhone}" />
+                        <GridViewColumn Header="{x:Static properties:Strings.Actions}" Width="Auto">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
-                                        <Button Content="Bearbeiten" Click="OnEditButtonClick" />
-                                        <Button Content="Löschen" Click="OnDeleteButtonClick" />
+                                        <Button Content="{x:Static properties:Strings.Edit}" Click="OnEditButtonClick" />
+                                        <Button Content="{x:Static properties:Strings.Delete}" Click="OnDeleteButtonClick" />
                                     </StackPanel>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>

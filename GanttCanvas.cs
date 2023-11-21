@@ -74,7 +74,7 @@ namespace Project_management
                 var pixelsPerDip = VisualTreeHelper.GetDpi(this).PixelsPerDip;
                 dc.DrawText(
                     new FormattedText(
-                        task.Value.Id.ToString(),
+                        task.Value.Title,
                         System.Globalization.CultureInfo.CurrentCulture,
                         FlowDirection.LeftToRight,
                         new Typeface("Arial"),

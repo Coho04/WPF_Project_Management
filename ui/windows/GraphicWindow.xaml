@@ -6,7 +6,9 @@
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                  xmlns:local="clr-namespace:Project_management"
                  Height="550" Width="1080"
-                 Title="Gantt-Diagramm" ResizeMode="CanMinimize" mc:Ignorable="d">
+                 xmlns:properties="clr-namespace:Project_management"
+                 DataContext="{Binding RelativeSource={RelativeSource Self}}"
+                 Title="{x:Static properties:Strings.Gantt_Diagram}" ResizeMode="CanMinimize" mc:Ignorable="d">
     <Grid>
         <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" >
             <local:GanttCanvas x:Name="GanttCanvas"/>

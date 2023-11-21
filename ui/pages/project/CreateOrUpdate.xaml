@@ -8,7 +8,8 @@
       mc:Ignorable="d" Height="550" Width="1080"
       Style="{DynamicResource MahApps.Styles.Page}"
       DataContext="{Binding RelativeSource={RelativeSource Self}}"
-      Title="CreateOrUpdate">
+      xmlns:properties="clr-namespace:Project_management"
+      Title="{x:Static properties:Strings.Add}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="2*" />
@@ -19,9 +20,9 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Content="Zurück" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left"
+            <Button Grid.Column="0" Content="{x:Static properties:Strings.Back}" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left"
                     BorderBrush="Black" BorderThickness="1" Click="CancelButton_Click" />
-            <Button Grid.Column="1" Content="Speichern" Width="150"
+            <Button Grid.Column="1" Content="{x:Static properties:Strings.Save}" Width="150"
                     Click="SaveButton_Click"
                     VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10" />
         </Grid>
@@ -46,7 +47,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Content="Title" />
+                    <Label Grid.Row="0" Content="{x:Static properties:Strings.Title}" />
                     <TextBox Grid.Row="1" Name="TitleTextBox" Text="Project A" Foreground="Gray" Margin="0,0,0,10"
                              providers:ExtraInfoProvider.ExtraInfo="Project A" />
                 </Grid>
@@ -55,7 +56,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Content="Start Datum" />
+                    <Label Grid.Row="0" Content="{x:Static properties:Strings.StartDate}" />
                     <DatePicker Grid.Row="1" Name="StartDateTextBox" Text="20.09.2023" Foreground="Gray"
                                 Margin="0,0,0,10" providers:ExtraInfoProvider.ExtraInfo="20.09.2023" />
                 </Grid>
@@ -71,7 +72,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Content="Manager" />
+                    <Label Grid.Row="0" Content="{x:Static properties:Strings.Manager}" />
                     <ComboBox Grid.Row="1" Name="EmployeeComboBox" Margin="0,0,0,10" SelectedValuePath="Id"
                               ItemsSource="{Binding Employees}">
                         <ComboBox.ItemTemplate>
@@ -89,7 +90,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Content="End Datum" />
+                    <Label Grid.Row="0" Content="{x:Static properties:Strings.EndDate}" />
                     <DatePicker Grid.Row="1" Name="EndDateTextBox" Text="20.10.2023" Foreground="Gray"
                                 Margin="0,0,0,10"
                                 providers:ExtraInfoProvider.ExtraInfo="20.10.2023"
@@ -101,7 +102,7 @@
                 <Button Width="150" Height="40" VerticalAlignment="Center" HorizontalAlignment="Right"
                         Margin="10,0,10,0" Click="AddTaskButton_Click">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Aufgabe hinzufügen" VerticalAlignment="Center" />
+                        <TextBlock Text="{x:Static properties:Strings.Add_Task}" VerticalAlignment="Center" />
                     </StackPanel>
                 </Button>
             </Grid>
@@ -112,10 +113,10 @@
                       Margin="10,20,10,10">
                 <DataGrid.Columns>
                     <!-- <DataGridTextColumn Header="Nummer" Binding="{Binding Id}" Width="*" /> -->
-                    <DataGridTextColumn Header="Title" Binding="{Binding Title}" Width="*" />
-                    <DataGridTextColumn Header="Description" Binding="{Binding Description}" Width="*" />
-                    <DataGridTextColumn Header="Dauer" Binding="{Binding Duration}" Width="*" />
-                    <DataGridTextColumn Header="Vorgänger" Binding="{Binding Parent}" Width="*" />
+                    <DataGridTextColumn Header="{x:Static properties:Strings.Title}" Binding="{Binding Title}" Width="*" />
+                    <DataGridTextColumn Header="{x:Static properties:Strings.Description}" Binding="{Binding Description}" Width="*" />
+                    <DataGridTextColumn Header="{x:Static properties:Strings.Duration}" Binding="{Binding Duration}" Width="*" />
+                    <DataGridTextColumn Header="{x:Static properties:Strings.Parent}" Binding="{Binding Parent}" Width="*" />
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
