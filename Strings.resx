@@ -138,4 +138,7 @@
     <data name="Task_added" xml:space="preserve">
         <value>Task added!</value>
     </data>
+    <data name="New_Department" xml:space="preserve">
+        <value>New department</value>
+    </data>
 </root>

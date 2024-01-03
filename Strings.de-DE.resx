@@ -123,4 +123,7 @@
     <data name="Task_added" xml:space="preserve">
         <value>Aufgabe hinzugefügt!</value>
     </data>
+    <data name="New_Department" xml:space="preserve">
+        <value>Neue Abteilung</value>
+    </data>
 </root>

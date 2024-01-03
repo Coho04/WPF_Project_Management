@@ -9,6 +9,6 @@
                  DataContext="{Binding RelativeSource={RelativeSource Self}}"
                  mc:Ignorable="d" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Frame Name="ProjectFrame" NavigationUIVisibility="Hidden" ></Frame>
+        <Frame Name="ProjectFrame" NavigationUIVisibility="Hidden"></Frame>
     </Grid>
 </mah:MetroWindow>

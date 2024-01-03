@@ -68,9 +68,6 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Label Grid.Row="0" Content="{x:Static properties:Strings.Parent}" Name="ParentLabel" />
-                <!-- <TextBox Grid.Row="1" Name="ParentTextBox" Text="20.10.2023" Foreground="Gray" Margin="0,0,0,10" -->
-                         <!-- GotFocus="TextBox_GotFocus" -->
-                         <!-- LostFocus="TextBox_LostFocus" /> -->
                 <ComboBox Grid.Row="1" Name="ParentComboBox" Margin="0,0,0,10" SelectedValuePath="Id">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>

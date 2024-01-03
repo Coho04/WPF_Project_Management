@@ -312,6 +312,15 @@ namespace Project_management {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New department.
+        /// </summary>
+        public static string New_Department {
+            get {
+                return ResourceManager.GetString("New_Department", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Number.
         /// </summary>
         public static string Number {

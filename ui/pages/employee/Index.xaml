@@ -31,16 +31,21 @@
                 </ListView.ItemContainerStyle>
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="{x:Static properties:Strings.FirstName}" Width="120" DisplayMemberBinding="{Binding FirstName}" />
-                        <GridViewColumn Header="{x:Static properties:Strings.LastName}" Width="120" DisplayMemberBinding="{Binding LastName}" />
-                        <GridViewColumn Header="{x:Static properties:Strings.Department}" Width="120" DisplayMemberBinding="{Binding Department.Title}" />
-                        <GridViewColumn Header="{x:Static properties:Strings.Phone}" Width="120" DisplayMemberBinding="{Binding MobilePhone}" />
+                        <GridViewColumn Header="{x:Static properties:Strings.FirstName}" Width="120"
+                                        DisplayMemberBinding="{Binding FirstName}" />
+                        <GridViewColumn Header="{x:Static properties:Strings.LastName}" Width="120"
+                                        DisplayMemberBinding="{Binding LastName}" />
+                        <GridViewColumn Header="{x:Static properties:Strings.Department}" Width="120"
+                                        DisplayMemberBinding="{Binding Department.Title}" />
+                        <GridViewColumn Header="{x:Static properties:Strings.Phone}" Width="120"
+                                        DisplayMemberBinding="{Binding MobilePhone}" />
                         <GridViewColumn Header="{x:Static properties:Strings.Actions}" Width="Auto">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <StackPanel Orientation="Horizontal">
                                         <Button Content="{x:Static properties:Strings.Edit}" Click="OnEditButtonClick" />
-                                        <Button Content="{x:Static properties:Strings.Delete}" Click="OnDeleteButtonClick" />
+                                        <Button Content="{x:Static properties:Strings.Delete}"
+                                                Click="OnDeleteButtonClick" />
                                     </StackPanel>
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>

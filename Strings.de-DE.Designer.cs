@@ -276,6 +276,15 @@ namespace Project_management {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Neue Abteilung.
+        /// </summary>
+        public static string New_Department {
+            get {
+                return ResourceManager.GetString("New_Department", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Nummer.
         /// </summary>
         public static string Number {

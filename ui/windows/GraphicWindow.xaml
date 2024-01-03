@@ -10,8 +10,8 @@
                  DataContext="{Binding RelativeSource={RelativeSource Self}}"
                  Title="{x:Static properties:Strings.Gantt_Diagram}" ResizeMode="CanMinimize" mc:Ignorable="d">
     <Grid>
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" >
-            <local:GanttCanvas x:Name="GanttCanvas"/>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <local:GanttCanvas x:Name="GanttCanvas" />
         </ScrollViewer>
     </Grid>
 </mah:MetroWindow>

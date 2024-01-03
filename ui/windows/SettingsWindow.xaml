@@ -7,49 +7,41 @@
                  DataContext="{Binding RelativeSource={RelativeSource Self}}"
                  ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen"
                  xmlns:properties="clr-namespace:Project_management"
-                 Title="Settings" Width="550" Height="650" mc:Ignorable="d">
+                 Title="{x:Static properties:Strings.Settings}" Width="550" Height="650" mc:Ignorable="d">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-
-        <!-- Top Section for Toggles -->
         <Grid Grid.Row="0" Margin="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-
-            <!-- Dark Mode Toggle -->
             <Grid Grid.Row="0" Margin="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Image Grid.Column="0" Source="/images/sun_icon.png" Width="50" Margin="10"/>
+                <Image Grid.Column="0" Source="/images/sun_icon.png" Width="50" Margin="10" />
                 <mah:ToggleSwitch Grid.Column="1" Toggled="DarkMode_Toggled"
                                   Margin="10"
                                   VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                                  VerticalAlignment="Center" HorizontalAlignment="Center"
-                                  />
+                                  VerticalAlignment="Center" HorizontalAlignment="Center" />
                 <Image Grid.Column="2" Source="/images/moon_icon.png" Width="50" Margin="10" />
             </Grid>
-
-            <!-- Translation Toggle -->
             <Grid Grid.Row="1" Margin="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Image Grid.Column="0" Source="/images/flags/English.png" Width="50" Margin="10"/>
+                <Image Grid.Column="0" Source="/images/flags/English.png" Width="50" Margin="10" />
                 <mah:ToggleSwitch Grid.Column="1" Toggled="ToggleSwitch_Toggled"
                                   Margin="10"
                                   VerticalContentAlignment="Center" HorizontalContentAlignment="Center"
-                                  VerticalAlignment="Center" HorizontalAlignment="Center"
-                                  />
+                                  VerticalAlignment="Center" HorizontalAlignment="Center" />
                 <Image Grid.Column="2" Source="/images/flags/German.png" Width="50" Margin="10" />
             </Grid>
         </Grid>

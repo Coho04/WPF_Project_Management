@@ -4,7 +4,6 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:providers="clr-namespace:Project_management.providers"
-      xmlns:helpers="clr-namespace:Project_management.helpers"
       mc:Ignorable="d" Height="550" Width="1080"
       Style="{DynamicResource MahApps.Styles.Page}"
       DataContext="{Binding RelativeSource={RelativeSource Self}}"
@@ -114,7 +113,6 @@
                       CanUserDeleteRows="False"
                       Margin="10,20,10,10">
                 <DataGrid.Columns>
-                    <!-- <DataGridTextColumn Header="Nummer" Binding="{Binding Id}" Width="*" /> -->
                     <DataGridTextColumn Header="{x:Static properties:Strings.Title}" Binding="{Binding Title}"
                                         Width="*" />
                     <DataGridTextColumn Header="{x:Static properties:Strings.Description}"
