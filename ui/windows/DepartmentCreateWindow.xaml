@@ -20,6 +20,6 @@
         
         <Label Content="{x:Static properties:Strings.Add_Department}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0"/>
         <TextBox Name="TitleTextBox" Width="150" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" Text="Title" Foreground="Gray" GotFocus="TextBox_GotFocus" LostFocus="TextBox_LostFocus"/>
-        <Button Content="{x:Static properties:Strings.Save}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" Click="OnSaveButtonClick"/>
+        <Button Name="SaveButton" Content="{x:Static properties:Strings.Save}" Width="100" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" Click="OnSaveButtonClick"/>
     </Grid>
 </mah:MetroWindow>

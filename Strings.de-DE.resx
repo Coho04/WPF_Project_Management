@@ -90,4 +90,37 @@
     <data name="Add_Department" xml:space="preserve">
         <value>Abteilung hinzufügen</value>
     </data>
+    <data name="Generate" xml:space="preserve">
+        <value>Generieren</value>
+    </data>
+    <data name="Create_Task" xml:space="preserve">
+        <value>Aufgabe hinzufügen</value>
+    </data>
+    <data name="HomePage" xml:space="preserve">
+        <value>Startseite</value>
+    </data>
+    <data name="Employee_Success_created" xml:space="preserve">
+        <value>Mitglied wurde erfolgreich hinzugefügt</value>
+    </data>
+    <data name="Please_fill_fields" xml:space="preserve">
+        <value>Folgende Felder müssen ausgefüllt sein</value>
+    </data>
+    <data name="Department_added" xml:space="preserve">
+        <value>Abteilung hinzugefügt!</value>
+    </data>
+    <data name="Department_successfully_updated" xml:space="preserve">
+        <value>Department wurde erfolgreich aktualisiert.</value>
+    </data>
+    <data name="Error" xml:space="preserve">
+        <value>Fehler</value>
+    </data>
+    <data name="Project_successfully_updated" xml:space="preserve">
+        <value>Projekt wurde erfolgreich aktualisiert.</value>
+    </data>
+    <data name="Project_successfully_added" xml:space="preserve">
+        <value>Project was successfully added.</value>
+    </data>
+    <data name="Task_added" xml:space="preserve">
+        <value>Aufgabe hinzugefügt!</value>
+    </data>
 </root>

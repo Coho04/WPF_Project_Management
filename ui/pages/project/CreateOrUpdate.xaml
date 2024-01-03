@@ -20,11 +20,12 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Content="{x:Static properties:Strings.Back}" Width="150" VerticalAlignment="Center" HorizontalAlignment="Left"
-                    BorderBrush="Black" BorderThickness="1" Click="CancelButton_Click" />
+            <Button Grid.Column="0" Content="{x:Static properties:Strings.Back}" Width="150" VerticalAlignment="Center"
+                    HorizontalAlignment="Left"
+                    BorderBrush="Black" BorderThickness="1" Click="CancelButton_Click" Name="CancelButton" />
             <Button Grid.Column="1" Content="{x:Static properties:Strings.Save}" Width="150"
                     Click="SaveButton_Click"
-                    VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10" />
+                    VerticalAlignment="Center" HorizontalAlignment="Right" Padding="10" Name="SaveButton" />
         </Grid>
         <Grid Grid.Row="1" Margin="10">
             <Grid.ColumnDefinitions>
@@ -47,7 +48,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Content="{x:Static properties:Strings.Title}" />
+                    <Label Grid.Row="0" Content="{x:Static properties:Strings.Title}" Name="TitleLabel" />
                     <TextBox Grid.Row="1" Name="TitleTextBox" Text="Project A" Foreground="Gray" Margin="0,0,0,10"
                              providers:ExtraInfoProvider.ExtraInfo="Project A" />
                 </Grid>
@@ -56,7 +57,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Content="{x:Static properties:Strings.StartDate}" />
+                    <Label Grid.Row="0" Content="{x:Static properties:Strings.StartDate}" Name="StartDateLabel" />
                     <DatePicker Grid.Row="1" Name="StartDateTextBox" Text="20.09.2023" Foreground="Gray"
                                 Margin="0,0,0,10" providers:ExtraInfoProvider.ExtraInfo="20.09.2023" />
                 </Grid>
@@ -72,7 +73,7 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Content="{x:Static properties:Strings.Manager}" />
+                    <Label Grid.Row="0" Content="{x:Static properties:Strings.Manager}" Name="ManagerLabel" />
                     <ComboBox Grid.Row="1" Name="EmployeeComboBox" Margin="0,0,0,10" SelectedValuePath="Id"
                               ItemsSource="{Binding Employees}">
                         <ComboBox.ItemTemplate>
@@ -90,16 +91,16 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-                    <Label Grid.Row="0" Content="{x:Static properties:Strings.EndDate}" />
+                    <Label Grid.Row="0" Content="{x:Static properties:Strings.EndDate}" Name="EndDateLabel" />
                     <DatePicker Grid.Row="1" Name="EndDateTextBox" Text="20.10.2023" Foreground="Gray"
                                 Margin="0,0,0,10"
-                                providers:ExtraInfoProvider.ExtraInfo="20.10.2023"
-                                />
+                                providers:ExtraInfoProvider.ExtraInfo="20.10.2023" />
                 </Grid>
             </Grid>
 
             <Grid Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="1">
                 <Button Width="150" Height="40" VerticalAlignment="Center" HorizontalAlignment="Right"
+                        Name="AddTaskButton"
                         Margin="10,0,10,0" Click="AddTaskButton_Click">
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{x:Static properties:Strings.Add_Task}" VerticalAlignment="Center" />
@@ -108,15 +109,30 @@
             </Grid>
 
             <DataGrid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Name="TasksDataGrid" AutoGenerateColumns="False"
+                      IsReadOnly="True"
                       ItemsSource="{Binding Tasks}" CanUserAddRows="False"
                       CanUserDeleteRows="False"
                       Margin="10,20,10,10">
                 <DataGrid.Columns>
                     <!-- <DataGridTextColumn Header="Nummer" Binding="{Binding Id}" Width="*" /> -->
-                    <DataGridTextColumn Header="{x:Static properties:Strings.Title}" Binding="{Binding Title}" Width="*" />
-                    <DataGridTextColumn Header="{x:Static properties:Strings.Description}" Binding="{Binding Description}" Width="*" />
-                    <DataGridTextColumn Header="{x:Static properties:Strings.Duration}" Binding="{Binding Duration}" Width="*" />
-                    <DataGridTextColumn Header="{x:Static properties:Strings.Parent}" Binding="{Binding Parent}" Width="*" />
+                    <DataGridTextColumn Header="{x:Static properties:Strings.Title}" Binding="{Binding Title}"
+                                        Width="*" />
+                    <DataGridTextColumn Header="{x:Static properties:Strings.Description}"
+                                        Binding="{Binding Description}" Width="*" />
+                    <DataGridTextColumn Header="{x:Static properties:Strings.Duration}" Binding="{Binding Duration}"
+                                        Width="*" />
+                    <DataGridTextColumn Header="{x:Static properties:Strings.Parent}" Binding="{Binding Parent.Id}"
+                                        Width="*" />
+                    <DataGridTemplateColumn Header="{x:Static properties:Strings.Actions}" Width="Auto">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="{x:Static properties:Strings.Delete}" Margin="10"
+                                            Click="DeleteTaskButton_Click" Name="DeleteButton" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

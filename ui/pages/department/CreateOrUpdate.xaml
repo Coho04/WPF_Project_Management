@@ -17,6 +17,7 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Button Content="{x:Static properties:Strings.Back}" Width="150" Height="Auto"
+                    Name="CancelButton"
                     VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10" Padding="10"
                     Click="OnCancelButtonClick" />
         </Grid>
@@ -26,10 +27,10 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <Label Content="{x:Static properties:Strings.Title}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                <Label Content="{x:Static properties:Strings.Title}" VerticalAlignment="Center" HorizontalAlignment="Center" Name="TitleLabel" />
             </Grid>
             <Grid Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBox Name="FirstNameTextBox" TextAlignment="Center" Text="John" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Gray" Width="250" Height="50" providers:ExtraInfoProvider.ExtraInfo="Department"/>
+                <TextBox Name="TitleTextBox" TextAlignment="Center" Text="John" VerticalContentAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="Gray" Width="250" Height="50" providers:ExtraInfoProvider.ExtraInfo="John"/>
             </Grid>  
         </Grid>
           <Grid Grid.Row="2">
@@ -41,7 +42,8 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Button Content="{x:Static properties:Strings.Save}" Width="150" Height="Auto"
+                <Button Content="{x:Static properties:Strings.Save}" Width="150" Height="Auto" 
+                        Name="SaveButton"
                         VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" Padding="10"
                         Click="OnSaveButtonClick" />
             </Grid>

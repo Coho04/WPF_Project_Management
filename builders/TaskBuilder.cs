@@ -38,15 +38,10 @@ public class TaskBuilder
 
     public void Build(int projectId)
     {
-        Console.WriteLine(Title);
-        Console.WriteLine(Description);
-        Console.WriteLine(Duration);
-        Console.WriteLine(Parent != null ? Parent : null);
-        Console.WriteLine(projectId);
-        var connection = DatabaseHelper.GetConnection().OpenAndReturn();
-        var insertQuery = "INSERT INTO Task (title, description, duration, parent_id, project_id)" +
+        using var connection = DatabaseHelper.GetConnection().OpenAndReturn();
+        const string insertQuery = "INSERT INTO Task (title, description, duration, parent_id, project_id)" +
                           " VALUES (@Title, @Description, @Duration, @ManagerId, @ProjectId);";
-        var command = new SQLiteCommand(insertQuery, connection);
+        using var command = new SQLiteCommand(insertQuery, connection);
         command.Parameters.AddWithValue("@Title", Title);
         command.Parameters.AddWithValue("@Description", Description);
         command.Parameters.AddWithValue("@Duration", Duration);

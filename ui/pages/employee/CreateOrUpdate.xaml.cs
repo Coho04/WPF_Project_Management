@@ -1,6 +1,8 @@
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.InteropServices.JavaScript;
+using System.Threading;
 using System.Windows;
 using Project_management.helpers;
 using Project_management.objects;
@@ -16,6 +18,7 @@ public partial class CreateOrUpdate
 
     public CreateOrUpdate(Employee? employee = null)
     {
+        LanguageManager.LanguageChanged += UpdateUiForLanguageChange;
         Departments = new ObservableCollection<Department>(Department.GetAll());
         InitializeComponent();
         if (employee != null)
@@ -70,7 +73,7 @@ public partial class CreateOrUpdate
         }
 
         if (Window.GetWindow(this) is not EmployeeWindow employeeWindow) return;
-        employeeWindow.SendSuccessToast("Abteilung hinzugefügt!");
+        employeeWindow.SendSuccessToast(Strings.Department_added);
     }
 
     private void OnCancelButtonClick(object sender, RoutedEventArgs e)
@@ -95,16 +98,29 @@ public partial class CreateOrUpdate
             Employee.UpdateOrCreate(firstName, lastName, department, mobilePhone, _employee?.Id ?? null);
             NavigationService?.Navigate(new Index());
             if (Window.GetWindow(this) is not EmployeeWindow employeeWindow) return;
-            employeeWindow.SendSuccessToast("Mitglied wurde erfolgreich hinzugefügt.");
+            employeeWindow.SendSuccessToast(Strings.Employee_Success_created);
         }
         else
         {
-            MessageBox.Show("Please enter both first and last name.");
+            MessageBox.Show(
+                Strings.Please_fill_fields + ": " + Strings.FirstName + ", " + Strings.LastName + ", " +
+                Strings.Department + "!", Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 
     private Department? SearchDepartmentInCollection(string value)
     {
         return Departments.FirstOrDefault(dept => dept.Title == value);
+    }
+
+    private void UpdateUiForLanguageChange()
+    {
+        var culture = Thread.CurrentThread.CurrentCulture;
+        CancelButton.Content = Strings.ResourceManager.GetString("Cancel", culture);
+        SaveButton.Content = Strings.ResourceManager.GetString("Save", culture);
+        FirstNameLabel.Content = Strings.ResourceManager.GetString("FirstName", culture);
+        LastNameLabel.Content = Strings.ResourceManager.GetString("LastName", culture);
+        DepartmentLabel.Content = Strings.ResourceManager.GetString("Department", culture);
+        PhoneLabel.Content = Strings.ResourceManager.GetString("Phone", culture);
     }
 }

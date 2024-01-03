@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Threading;
 using System.Windows;
 using ControlzEx.Theming;
@@ -15,11 +16,7 @@ namespace Project_management.ui.windows
 
         public MainWindow()
         {
-            // var theme = ThemeManager.Current.DetectTheme(Application.Current);
-          
-
-            
-            
+            LanguageManager.LanguageChanged += UpdateUIForLanguageChange;
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
             InitializeComponent();
@@ -78,6 +75,17 @@ namespace Project_management.ui.windows
                 _settingsWindow.Show();
             }
             _settingsWindow.Activate();
+        }
+        
+        private void UpdateUIForLanguageChange()
+        {
+            var culture = Thread.CurrentThread.CurrentCulture;
+            EmployeeButton.Content = Strings.ResourceManager.GetString("Employee", culture);
+            ProjectButton.Content = Strings.ResourceManager.GetString("Project", culture);
+            DepartmentButton.Content = Strings.ResourceManager.GetString("Department", culture);
+            SettingsButton.Content = Strings.ResourceManager.GetString("Settings", culture);
+            Title = Strings.ResourceManager.GetString("HomePage", culture);
+
         }
     }
 }

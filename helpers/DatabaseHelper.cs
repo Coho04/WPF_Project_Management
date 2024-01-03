@@ -70,7 +70,8 @@ public class DatabaseHelper
 
     private static void CreateTable(SQLiteConnection connection, string createTableQuery, string tableName)
     {
-        new SQLiteCommand(createTableQuery, connection).ExecuteNonQuery();
+        using var command = new SQLiteCommand(createTableQuery, connection);
+        command.ExecuteNonQuery();
         Console.WriteLine($"Tabelle {tableName} überprüft/erstellt.");
     }
 }

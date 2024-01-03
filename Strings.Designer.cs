@@ -123,6 +123,15 @@ namespace Project_management {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create task.
+        /// </summary>
+        public static string Create_Task {
+            get {
+                return ResourceManager.GetString("Create_Task", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Delete.
         /// </summary>
         public static string Delete {
@@ -137,6 +146,24 @@ namespace Project_management {
         public static string Department {
             get {
                 return ResourceManager.GetString("Department", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Department added!.
+        /// </summary>
+        public static string Department_added {
+            get {
+                return ResourceManager.GetString("Department_added", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Department has been successfully updated..
+        /// </summary>
+        public static string Department_successfully_updated {
+            get {
+                return ResourceManager.GetString("Department_successfully_updated", resourceCulture);
             }
         }
         
@@ -177,11 +204,29 @@ namespace Project_management {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Member was successfully added.
+        /// </summary>
+        public static string Employee_Success_created {
+            get {
+                return ResourceManager.GetString("Employee_Success_created", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to End Date.
         /// </summary>
         public static string EndDate {
             get {
                 return ResourceManager.GetString("EndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        public static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
             }
         }
         
@@ -204,11 +249,29 @@ namespace Project_management {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Generate.
+        /// </summary>
+        public static string Generate {
+            get {
+                return ResourceManager.GetString("Generate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Graphic.
         /// </summary>
         public static string Graphic {
             get {
                 return ResourceManager.GetString("Graphic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home.
+        /// </summary>
+        public static string HomePage {
+            get {
+                return ResourceManager.GetString("HomePage", resourceCulture);
             }
         }
         
@@ -240,6 +303,15 @@ namespace Project_management {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Number.
         /// </summary>
         public static string Number {
@@ -267,11 +339,38 @@ namespace Project_management {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The following fields must be filled in.
+        /// </summary>
+        public static string Please_fill_fields {
+            get {
+                return ResourceManager.GetString("Please_fill_fields", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Project.
         /// </summary>
         public static string Project {
             get {
                 return ResourceManager.GetString("Project", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Projekt wurde erfolgreich hinzugefügt..
+        /// </summary>
+        public static string Project_successfully_added {
+            get {
+                return ResourceManager.GetString("Project_successfully_added", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project has been successfully updated..
+        /// </summary>
+        public static string Project_successfully_updated {
+            get {
+                return ResourceManager.GetString("Project_successfully_updated", resourceCulture);
             }
         }
         
@@ -299,6 +398,15 @@ namespace Project_management {
         public static string StartDate {
             get {
                 return ResourceManager.GetString("StartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Task added!.
+        /// </summary>
+        public static string Task_added {
+            get {
+                return ResourceManager.GetString("Task_added", resourceCulture);
             }
         }
         

@@ -84,7 +84,6 @@ namespace Project_management
                     ), new Point(5, yOffset));
                 var taskRect = new Rect(xOffset, yOffset, task.Value.Duration * 20, 30);
                 var taskColor = TaskTypeMethodes.GetColor(task.Value);
-                Console.WriteLine(taskColor.ToString());
                 dc.DrawRectangle(taskColor, new Pen(Brushes.Black, 1), taskRect);
                 yOffset += 40;
             }
@@ -113,20 +112,6 @@ namespace Project_management
                         Brushes.Black,
                         pixelsPerDip
                     ), new Point(summe, 10));
-            }
-        }
-
-        private static Brush GetTaskColor(string taskTitle)
-        {
-            switch (taskTitle)
-            {
-                case "Analyse": return Brushes.LightBlue;
-                case "Planung": return Brushes.LightGreen;
-                case "Modul 1": return Brushes.Orange;
-                case "Design 1": return Brushes.Yellow;
-                case "Modul 2": return Brushes.Gray;
-                case "Testphase": return Brushes.Pink;
-                default: return Brushes.Blue;
             }
         }
 

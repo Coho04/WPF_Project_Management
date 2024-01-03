@@ -1,4 +1,8 @@
+using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using Project_management.objects;
@@ -13,6 +17,7 @@ public partial class Index
     public Index()
     {
         Projects = new ObservableCollection<Project>(Project.GetAll());
+        LanguageManager.LanguageChanged += UpdateUiForLanguageChange;
         InitializeComponent();
         DataContext = this;
     }
@@ -40,5 +45,29 @@ public partial class Index
     private void CreateButton_Click(object sender, RoutedEventArgs e)
     {
         NavigationService?.Navigate(new CreateOrUpdate());
+    }
+
+    private void UpdateUiForLanguageChange()
+    {
+        var culture = Thread.CurrentThread.CurrentCulture;
+        if (ProjectGrid.Columns[0] is not DataGridTextColumn numberColumn) return;
+        numberColumn.Header = Strings.ResourceManager.GetString("Number", culture);
+
+        if (ProjectGrid.Columns[1] is not DataGridTextColumn titleColumn) return;
+        titleColumn.Header = Strings.ResourceManager.GetString("Title", culture);
+
+        if (ProjectGrid.Columns[2] is not DataGridTextColumn startDateColumn) return;
+        startDateColumn.Header = Strings.ResourceManager.GetString("StartDate", culture);
+
+        if (ProjectGrid.Columns[3] is not DataGridTextColumn endDateColumn) return;
+        endDateColumn.Header = Strings.ResourceManager.GetString("EndDate", culture);
+
+        if (ProjectGrid.Columns[4] is not DataGridTextColumn managerColumn) return;
+        managerColumn.Header = Strings.ResourceManager.GetString("Manager", culture);
+
+        if (ProjectGrid.Columns[5] is not DataGridTextColumn actionsColumn) return;
+        actionsColumn.Header = Strings.ResourceManager.GetString("Actions", culture);
+        
+        AddButton.Content = Strings.ResourceManager.GetString("Add", culture);
     }
 }

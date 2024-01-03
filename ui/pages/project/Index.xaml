@@ -16,6 +16,7 @@
 
             <Button Width="150" Height="40" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="10,0,10,0"
                     BorderThickness="1"
+                    Name="AddButton"
                     Click="CreateButton_Click">
                 <StackPanel Orientation="Horizontal">
                     <!-- <Image Source="add_person_icon.png" Width="20" Height="20" Margin="0,0,10,0" /> -->
@@ -24,21 +25,27 @@
             </Button>
         </Grid>
         <DataGrid AutoGenerateColumns="False" Grid.Row="1"
+                  Name="ProjectGrid"
                   ItemsSource="{Binding Projects}" CanUserAddRows="False" CanUserDeleteRows="False"
                   Margin="10,0,10,10">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{x:Static properties:Strings.Number}" Binding="{Binding Id}" Width="*" />
                 <DataGridTextColumn Header="{x:Static properties:Strings.Title}" Binding="{Binding Title}" Width="*" />
-                <DataGridTextColumn Header="{x:Static properties:Strings.StartDate}" Binding="{Binding StartDate}" Width="*" />
-                <DataGridTextColumn Header="{x:Static properties:Strings.EndDate}" Binding="{Binding EndDate}" Width="1*" />
-                <DataGridTextColumn Header="{x:Static properties:Strings.Manager}" Binding="{Binding Manager.FirstName}" Width="*" />
+                <DataGridTextColumn Header="{x:Static properties:Strings.StartDate}" Binding="{Binding StartDate}"
+                                    Width="*" />
+                <DataGridTextColumn Header="{x:Static properties:Strings.EndDate}" Binding="{Binding EndDate}"
+                                    Width="1*" />
+                <DataGridTextColumn Header="{x:Static properties:Strings.Manager}"
+                                    Binding="{Binding Manager.FirstName}" Width="*" />
                 <DataGridTemplateColumn Header="{x:Static properties:Strings.Actions}" Width="Auto">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
-                                <Button Content="{x:Static properties:Strings.Edit}" Margin="10" Click="EditButton_Click" />
-                                <Button Content="{x:Static properties:Strings.Delete}" Margin="10" Click="DeleteButton_Click" />
-                                <Button Content="{x:Static properties:Strings.Graphic}" Margin="10" Click="GraphicButton_Click">
+                                <Button Content="{x:Static properties:Strings.Edit}" Margin="10" Click="EditButton_Click" Name="EditButton" />
+                                <Button Content="{x:Static properties:Strings.Delete}" Margin="10"
+                                        Click="DeleteButton_Click" Name="DeleteButton" />
+                                <Button Content="{x:Static properties:Strings.Graphic}" Margin="10"
+                                        Click="GraphicButton_Click" Name="GraphicButton">
                                     <Button.Style>
                                         <Style TargetType="Button" BasedOn="{StaticResource {x:Type Button}}">
                                             <Setter Property="Visibility" Value="Visible" />

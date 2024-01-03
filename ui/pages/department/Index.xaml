@@ -15,6 +15,7 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Button Width="150" Height="40" VerticalAlignment="Center" HorizontalAlignment="Right"
+                    Name="AddButton"
                     Margin="10,0,10,0" Click="OnCreateButtonClick">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{x:Static properties:Strings.Add}" VerticalAlignment="Center" />
@@ -22,7 +23,7 @@
             </Button>
         </Grid>
         <Border BorderBrush="Black" BorderThickness="0, 1,0,0" Grid.Row="1" Margin="2.5,0,2.5,0">
-            <ListView ItemsSource="{Binding Departments}" SizeChanged="OnListViewSizeChanged">
+            <ListView ItemsSource="{Binding Departments}" SizeChanged="OnListViewSizeChanged" Name="ListView">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="Margin" Value="0,0,0,5" />
@@ -30,7 +31,7 @@
                 </ListView.ItemContainerStyle>
                 <ListView.View>
                     <GridView>
-                        <GridViewColumn Header="{x:Static properties:Strings.FirstName}" Width="120" DisplayMemberBinding="{Binding Title}" />
+                        <GridViewColumn Header="{x:Static properties:Strings.Name}" Width="120" DisplayMemberBinding="{Binding Title}" />
                         <GridViewColumn Header="{x:Static properties:Strings.Actions}" Width="Auto">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>

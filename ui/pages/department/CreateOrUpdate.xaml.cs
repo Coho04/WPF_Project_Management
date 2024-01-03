@@ -1,6 +1,8 @@
+using System.Threading;
 using System.Windows;
 using Project_management.helpers;
 using Project_management.objects;
+using Project_management.ui.windows;
 
 namespace Project_management.ui.pages.department;
 
@@ -10,13 +12,15 @@ public partial class CreateOrUpdate
 
     public CreateOrUpdate(Department? department = null)
     {
+        LanguageManager.LanguageChanged += UpdateUiForLanguageChange;
         InitializeComponent();
         if (department != null)
         {
-            // _department = department;
-            // FirstNameTextBox.Text = employee.FirstName;
+            _department = department;
+            TitleTextBox.Text = department.Title;
         }
-        ControlHelper.RegisterFocusEvents(FirstNameTextBox);
+
+        ControlHelper.RegisterFocusEvents(TitleTextBox);
         DataContext = this;
     }
 
@@ -27,36 +31,35 @@ public partial class CreateOrUpdate
 
     private void OnSaveButtonClick(object sender, RoutedEventArgs e)
     {
-        // var firstName = FirstNameTextBox.Text;
-        // var lastName = LastNameTextBox.Text;
-        // var department = DepartmentComboBox.SelectionBoxItem as Department;
-        // var mobilePhone = MobilePhoneTextBox.Text;
-        // if (!string.IsNullOrWhiteSpace(firstName) && !string.IsNullOrWhiteSpace(lastName) && department != null)
-        // {
-        //     Employee.UpdateOrCreate(firstName, lastName, department, mobilePhone, _employee?.Id ?? null);
-        //     NavigationService?.Navigate(new Index());
-        //     if (Window.GetWindow(this) is not EmployeeWindow employeeWindow) return;
-        //     employeeWindow.SendSuccessToast("Mitglied wurde erfolgreich hinzugefügt.");
-        // }
-        // else
-        // {
-        //     MessageBox.Show("Please enter both first and last name.");
-        // }
+        var title = TitleTextBox.Text;
+        if (!string.IsNullOrWhiteSpace(title) && ValidationHelper.CheckAndMark(TitleTextBox) )
+        {
+            if (_department != null)
+            {
+                _department.Update(title);
+                NavigationService?.Navigate(new Index());
+                if (Window.GetWindow(this) is not DepartmentWindow departmentWindow) return;
+                departmentWindow.SendSuccessToast(Strings.Department_successfully_updated);
+            }
+            else
+            {
+                Department.FindOrCreateByTitle(title);
+                NavigationService?.Navigate(new Index());
+                if (Window.GetWindow(this) is not DepartmentWindow departmentWindow) return;
+                departmentWindow.SendSuccessToast(Strings.Department_added);
+            }
+        }
+        else
+        {
+            MessageBox.Show(Strings.Please_fill_fields + ": " + Strings.Title, Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
+        }
     }
 
-    // private void RemoveFocusFromTextBox(TextBox textBox, bool remove = true)
-    // {
-    //     if (remove)
-    //     {
-    //         textBox.GotFocus -= TextBox_GotFocus;
-    //         textBox.LostFocus -= TextBox_LostFocus;
-    //         textBox.Foreground = Brushes.Black;
-    //     }
-    //     else
-    //     {
-    //         textBox.GotFocus += TextBox_GotFocus;
-    //         textBox.LostFocus += TextBox_LostFocus;
-    //         textBox.Foreground = Brushes.Gray;
-    //     }
-    // }
+    private void UpdateUiForLanguageChange()
+    {
+        var culture = Thread.CurrentThread.CurrentCulture;
+        SaveButton.Content = Strings.ResourceManager.GetString("Save", culture);
+        CancelButton.Content = Strings.ResourceManager.GetString("Cancel", culture);
+        TitleLabel.Content = Strings.ResourceManager.GetString("Title", culture);
+    }
 }

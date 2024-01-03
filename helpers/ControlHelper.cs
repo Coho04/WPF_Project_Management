@@ -17,15 +17,9 @@ public class ControlHelper
     private static void LostFocus(object sender, RoutedEventArgs e)
     {
         if (sender is not TextBox textBox) return;
-        var context = textBox.Text;
-    
-        // Verwenden Sie context, um den aktuellen Textzustand anzuzeigen
-        Console.WriteLine(context);
-
-        // Aktualisieren Sie textBox.Text basierend auf Ihren Anforderungen
         if (string.IsNullOrWhiteSpace(textBox.Text))
         {
-            textBox.Text = ExtraInfoProvider.GetExtraInfo(textBox);
+            textBox.Undo();
             textBox.Foreground = Brushes.Gray;
         }
         else

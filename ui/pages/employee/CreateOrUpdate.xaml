@@ -15,7 +15,8 @@
             <RowDefinition Height="8*" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <Button Content="{x:Static properties:Strings.Back}" Width="150" Height="Auto"
+            <Button Content="{x:Static properties:Strings.Cancel}" Width="150" Height="Auto"
+                    Name="CancelButton"
                     VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10" Padding="10"
                     Click="OnCancelButtonClick" />
         </Grid>
@@ -46,7 +47,8 @@
                         <ColumnDefinition Width="3*" />
                         <ColumnDefinition Width="7*" />
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Content="{x:Static properties:Strings.FirstName}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <Label Grid.Column="0" Content="{x:Static properties:Strings.FirstName}" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                           Name="FirstNameLabel"/>
                     <TextBox Grid.Column="1" Name="FirstNameTextBox" providers:ExtraInfoProvider.ExtraInfo="John"
                              VerticalContentAlignment="Center"
                              Text="John" Foreground="Gray" />
@@ -56,7 +58,8 @@
                         <ColumnDefinition Width="3*" />
                         <ColumnDefinition Width="7*" />
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Content="{x:Static properties:Strings.LastName}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <Label Grid.Column="0" Content="{x:Static properties:Strings.LastName}" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                           Name="LastNameLabel"/>
                     <TextBox Grid.Column="1" Name="LastNameTextBox" providers:ExtraInfoProvider.ExtraInfo="Doe"
                              VerticalContentAlignment="Center"
                              Text="Doe" Foreground="Gray" />
@@ -67,7 +70,8 @@
                         <ColumnDefinition Width="5*" />
                         <ColumnDefinition Width="2*" />
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Content="{x:Static properties:Strings.Department}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <Label Grid.Column="0" Content="{x:Static properties:Strings.Department}" VerticalAlignment="Center" HorizontalAlignment="Center" 
+                           Name="DepartmentLabel"/>
                     <ComboBox Grid.Column="1" Name="DepartmentComboBox" VerticalAlignment="Center"
                               SelectedValuePath="Id" Padding="10" ItemsSource="{Binding Departments}"
                               VerticalContentAlignment="Center" HorizontalContentAlignment="Center">
@@ -96,7 +100,8 @@
                         <ColumnDefinition Width="3*" />
                         <ColumnDefinition Width="7*" />
                     </Grid.ColumnDefinitions>
-                    <Label Grid.Column="0" Content="{x:Static properties:Strings.Phone}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                    <Label Grid.Column="0" Content="{x:Static properties:Strings.Phone}" VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Name="PhoneLabel"/>
                     <TextBox Grid.Column="1" Name="MobilePhoneTextBox"
                              providers:ExtraInfoProvider.ExtraInfo="+49 176726863"
                              VerticalContentAlignment="Center"
@@ -121,6 +126,7 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
                     <Button Grid.Column="1" Content="{x:Static properties:Strings.Save}" Width="150" Height="Auto"
+                             Name="SaveButton"
                             VerticalAlignment="Center" HorizontalAlignment="Left" Margin="10" Padding="10"
                             Click="OnSaveButtonClick" />
                 </Grid>

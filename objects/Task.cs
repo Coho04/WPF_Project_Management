@@ -33,18 +33,18 @@ public class Task
         Parent = null;
     }
 
-    public static Task GetById(int id)
+    public static Task? GetById(int id)
     {
         var tasksMap = new Dictionary<int, Task>();
         var stack = new Stack<int>();
         stack.Push(id);
-        var connection = DatabaseHelper.GetConnection().OpenAndReturn();
+        using var connection = DatabaseHelper.GetConnection().OpenAndReturn();
         while (stack.Count > 0)
         {
             var currentId = stack.Pop();
             if (tasksMap.ContainsKey(currentId)) continue;
-            var command = new SQLiteCommand($"SELECT * FROM Task WHERE id = {currentId}", connection);
-            var reader = command.ExecuteReader();
+            using var command = new SQLiteCommand($"SELECT * FROM Task WHERE id = {currentId}", connection);
+            using var reader = command.ExecuteReader();
             if (!reader.Read()) continue;
             var title = reader.GetString(1);
             var description = reader.GetString(2);
@@ -63,22 +63,18 @@ public class Task
                 var task = new Task(id, description, title, duration, type, GetById(reader.GetInt32(4)));
                 tasksMap[currentId] = task;
             }
+            reader.Close();
         }
-
         connection.Close();
         return tasksMap.ContainsKey(id) ? tasksMap[id] : null;
     }
 
-    public int GetTaskLevel()
+    public void Delete()
     {
-        var level = 0;
-        var parent = Parent;
-        while (parent != null)
-        {
-            level++;
-            parent = parent.Parent;
-        }
-
-        return level * 20;
+        using var connection = DatabaseHelper.GetConnection().OpenAndReturn();
+        using var command = new SQLiteCommand("DELETE FROM Task WHERE id = @Id;", connection);
+        command.Parameters.AddWithValue("@Id", Id);
+        command.ExecuteNonQuery();
+        connection.Close();
     }
 }

@@ -1,3 +1,5 @@
+using System.Threading;
+using System.Windows.Controls;
 using Project_management.helpers;
 using Project_management.ui.pages.employee;
 using ToastNotifications;
@@ -11,6 +13,7 @@ public partial class EmployeeWindow
 
     public EmployeeWindow()
     {
+        LanguageManager.LanguageChanged += UpdateUiForLanguageChange;
         InitializeComponent();
         EmployeeFrame.Navigate(new Index());
         _notifier = ToastHelper.CreateToast(this);
@@ -20,5 +23,10 @@ public partial class EmployeeWindow
     public void SendSuccessToast(string message)
     {
         _notifier.ShowSuccess(message);
+    }
+    
+    private void UpdateUiForLanguageChange()
+    {
+        Title = Strings.ResourceManager.GetString("Employee", Thread.CurrentThread.CurrentCulture);
     }
 }

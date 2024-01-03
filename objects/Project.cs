@@ -25,9 +25,9 @@ public class Project
     public static List<Project> GetAll()
     {
         var projects = new List<Project>();
-        var connection = DatabaseHelper.GetConnection().OpenAndReturn();
-        var command = new SQLiteCommand("SELECT * FROM Project;", connection);
-        var reader = command.ExecuteReader();
+        using var connection = DatabaseHelper.GetConnection().OpenAndReturn();
+        using var command = new SQLiteCommand("SELECT * FROM Project;", connection);
+        using var reader = command.ExecuteReader();
         while (reader.Read())
         {
             var id = reader.GetInt32(0);
@@ -38,26 +38,27 @@ public class Project
             var project = new Project(id, title, startDate, endDate, Employee.GetById(employee));
             projects.Add(project);
         }
-
+        reader.Close();
         connection.Close();
         return projects;
     }
 
     public static Project? GetById(int id)
     {
-        var connection = DatabaseHelper.GetConnection().OpenAndReturn();
-        var command = new SQLiteCommand("SELECT * FROM Project where id = " + id, connection);
-        var reader = command.ExecuteReader();
+        using var connection = DatabaseHelper.GetConnection().OpenAndReturn();
+        using var command = new SQLiteCommand("SELECT * FROM Project where id = " + id, connection);
+        using var reader = command.ExecuteReader();
         while (reader.Read())
         {
             var title = reader.GetString(1);
             var startDate = reader.GetDateTime(2);
             var endDate = reader.GetDateTime(3);
             var employeeId = reader.GetInt32(4);
+            reader.Close();
             connection.Close();
             return new Project(id, title, startDate, endDate, Employee.GetById(employeeId));
         }
-
+        reader.Close();
         connection.Close();
         return null;
     }
@@ -65,10 +66,10 @@ public class Project
     public List<Task> GetTasks()
     {
         var tasks = new List<Task>();
-        var connection = DatabaseHelper.GetConnection().OpenAndReturn();
-        var command = new SQLiteCommand("SELECT * FROM Task where project_id = @Id;", connection);
+        using var connection = DatabaseHelper.GetConnection().OpenAndReturn();
+        using var command = new SQLiteCommand("SELECT * FROM Task where project_id = @Id;", connection);
         command.Parameters.AddWithValue("@Id", Id);
-        var reader = command.ExecuteReader();
+        using var reader = command.ExecuteReader();
         while (reader.Read())
         {
             var id = reader.GetInt32(0);
@@ -78,25 +79,40 @@ public class Project
             var task = reader.GetString(6);
             if (reader.IsDBNull(4))
             {
-                var project = new Task(id, title, description, duration, task);
-                tasks.Add(project);
+                tasks.Add(new Task(id, title, description, duration, task));
             }
             else
             {
-                var parentTask = Task.GetById(reader.GetInt32(4));
-                var project = new Task(id, title, description, duration, task, parentTask);
+                var project = new Task(id, title, description, duration, task, Task.GetById(reader.GetInt32(4)));
                 tasks.Add(project);
             }
         }
-
+        reader.Close();
         connection.Close();
         return tasks;
     }
 
+    public void Update(string title, DateTime startDate, Employee employee, DateTime endDate)
+    {
+        Title = title;
+        StartDate = startDate;
+        Manager = employee;
+        EndDate = endDate;
+        using var connection = DatabaseHelper.GetConnection().OpenAndReturn();
+        const string insertQuery = "UPDATE Project SET title = @Title, startdate = @StartDate, enddate = @EndDate, employee_id = @Manager_Id WHERE id = @Id;";
+        using var command = new SQLiteCommand(insertQuery, connection);
+        command.Parameters.AddWithValue("@Title", Title);
+        command.Parameters.AddWithValue("@StartDate", StartDate);
+        command.Parameters.AddWithValue("@EndDate", EndDate);
+        command.Parameters.AddWithValue("@Manager_Id", Manager.Id);
+        command.Parameters.AddWithValue("@Id", Id);
+        command.ExecuteNonQuery();
+    }
+
     public void Delete()
     {
-        var connection = DatabaseHelper.GetConnection().OpenAndReturn();
-        var command = new SQLiteCommand("DELETE FROM Project WHERE id = @Id;", connection);
+        using var connection = DatabaseHelper.GetConnection().OpenAndReturn();
+        using var command = new SQLiteCommand("DELETE FROM Project WHERE id = @Id;", connection);
         command.Parameters.AddWithValue("@Id", Id);
         command.ExecuteNonQuery();
         connection.Close();
@@ -104,8 +120,8 @@ public class Project
 
     public long GetCompleteTaskDuration()
     {
-        var connection = DatabaseHelper.GetConnection().OpenAndReturn();
-        var command = new SQLiteCommand("SELECT SUM(duration) FROM Task where project_id = @Id;", connection);
+        using var connection = DatabaseHelper.GetConnection().OpenAndReturn();
+        using var command = new SQLiteCommand("SELECT SUM(duration) FROM Task where project_id = @Id;", connection);
         command.Parameters.AddWithValue("@Id", Id);
         var result = command.ExecuteScalar();
         connection.Close();
@@ -115,8 +131,8 @@ public class Project
 
     private bool HasTasks()
     {
-        var connection = DatabaseHelper.GetConnection().OpenAndReturn();
-        var command = new SQLiteCommand("SELECT count(*) FROM Task where project_id = @Id;", connection);
+        using var connection = DatabaseHelper.GetConnection().OpenAndReturn();
+        using var command = new SQLiteCommand("SELECT count(*) FROM Task where project_id = @Id;", connection);
         command.Parameters.AddWithValue("@Id", Id);
         var result = command.ExecuteScalar();
         connection.Close();

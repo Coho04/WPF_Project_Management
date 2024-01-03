@@ -1,4 +1,3 @@
-using System;
 using System.Windows.Media;
 using Project_management.objects;
 
@@ -38,8 +37,6 @@ public class TaskTypeMethodes
 
     public static Brush GetColor(Task task)
     {
-        Console.WriteLine(GetType(task));
-        Console.WriteLine(task.Type);
         return GetType(task) switch
         {
             TaskType.Initiation => Brushes.Aqua,

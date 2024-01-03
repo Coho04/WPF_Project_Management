@@ -1,4 +1,5 @@
 using System.Collections.ObjectModel;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using Project_management.objects;
@@ -11,6 +12,7 @@ public partial class Index
 
     public Index()
     {
+        LanguageManager.LanguageChanged += UpdateUiForLanguageChange;
         Departments = new ObservableCollection<Department>(Department.GetAll());
         InitializeComponent();
         DataContext = this;
@@ -45,5 +47,18 @@ public partial class Index
     {
         var department = (Department)((Button)sender).DataContext;
         NavigationService?.Navigate(new CreateOrUpdate(department));
+    }
+    
+    private void UpdateUiForLanguageChange()
+    {
+        var culture = Thread.CurrentThread.CurrentCulture;
+        if (ListView.View is GridView gridView)
+        {
+            if (gridView.Columns.Count > 0)
+                gridView.Columns[0].Header = Strings.ResourceManager.GetString("Name", culture);
+            if (gridView.Columns.Count > 1)
+                gridView.Columns[1].Header = Strings.ResourceManager.GetString("Actions", culture);
+        }
+        AddButton.Content = Strings.ResourceManager.GetString("Add", culture);
     }
 }

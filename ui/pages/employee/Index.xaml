@@ -15,6 +15,7 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Button Width="150" Height="40" VerticalAlignment="Center" HorizontalAlignment="Right"
+                    Name="AddButton"
                     Margin="10,0,10,0" Click="OnCreateButtonClick">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock Text="{x:Static properties:Strings.Add}" VerticalAlignment="Center" />

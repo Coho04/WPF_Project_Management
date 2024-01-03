@@ -41,11 +41,11 @@ public class ProjectBuilder
 
     public Project Build()
     {
-        var connection = DatabaseHelper.GetConnection().OpenAndReturn();
+        using var connection = DatabaseHelper.GetConnection().OpenAndReturn();
         const string insertQuery = "INSERT INTO Project (title, startdate, enddate, employee_id)" +
                           " VALUES (@Title, @StartDate, @EndDate, @Manager_Id);" +
                           "SELECT last_insert_rowid();";
-        var command = new SQLiteCommand(insertQuery, connection);
+        using var command = new SQLiteCommand(insertQuery, connection);
         command.Parameters.AddWithValue("@Title", Title);
         command.Parameters.AddWithValue("@StartDate", StartDate);
         command.Parameters.AddWithValue("@EndDate", EndDate);

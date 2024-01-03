@@ -1,3 +1,4 @@
+using System.Threading;
 using Project_management.helpers;
 using Project_management.ui.pages.department;
 using ToastNotifications;
@@ -11,6 +12,7 @@ public partial class DepartmentWindow
 
     public DepartmentWindow()
     {
+        LanguageManager.LanguageChanged += UpdateUiForLanguageChange;
         InitializeComponent();
         _notifier = ToastHelper.CreateToast(this);
         DepartmentFrame.Navigate(new Index());
@@ -19,5 +21,10 @@ public partial class DepartmentWindow
     public void SendSuccessToast(string message)
     {
         _notifier.ShowSuccess(message);
+    }
+    
+    private void UpdateUiForLanguageChange()
+    {
+        Title = Strings.ResourceManager.GetString("Department", Thread.CurrentThread.CurrentCulture);
     }
 }

@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -12,6 +13,7 @@ public partial class DepartmentCreateWindow
     
     public DepartmentCreateWindow()
     {
+        LanguageManager.LanguageChanged += UpdateUiForLanguageChange;
         InitializeComponent();
     }
 
@@ -36,5 +38,10 @@ public partial class DepartmentCreateWindow
         if (!string.IsNullOrWhiteSpace(textBox.Text)) return;
         textBox.Text = textBox.Name == TitleTextBox.Name ? "Title" : "";
         textBox.Foreground = Brushes.Gray;
+    }
+    
+    private void UpdateUiForLanguageChange()
+    {
+        SaveButton.Content = Strings.ResourceManager.GetString("Generate", Thread.CurrentThread.CurrentCulture);
     }
 }

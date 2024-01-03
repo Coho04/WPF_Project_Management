@@ -1,11 +1,15 @@
 using System;
 using System.Collections.ObjectModel;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
-using Microsoft.VisualBasic;
+using System.Windows.Controls;
+using System.Windows.Media;
 using Project_management.builders;
 using Project_management.helpers;
 using Project_management.objects;
 using Project_management.ui.windows;
+using Task = Project_management.objects.Task;
 
 namespace Project_management.ui.pages.project;
 
@@ -17,10 +21,33 @@ public partial class CreateOrUpdate
 
     public CreateOrUpdate(Project? project = null)
     {
+        LanguageManager.LanguageChanged += UpdateUiForLanguageChange;
         InitializeComponent();
-        Project = project;
-        ProjectBuilder = new ProjectBuilder();
-        EmployeeComboBox.ItemsSource = Employee.GetAll();
+        var employees = Employee.GetAll();
+        EmployeeComboBox.ItemsSource = employees;
+        if (project != null)
+        {
+            Project = project;
+            TitleTextBox.Text = project.Title;
+            StartDateTextBox.Text = project.StartDate.ToString();
+            EndDateTextBox.Text = project.EndDate.ToString();
+            if (project.Manager is Employee selectedEmployee)
+            {
+                EmployeeComboBox.SelectedItem = employees.Find(employee => employee.Id == selectedEmployee.Id);
+            }
+
+            TasksDataGrid.ItemsSource = project.GetTasks();
+
+            TitleTextBox.Foreground = Brushes.Black;
+            StartDateTextBox.Foreground = Brushes.Black;
+            EndDateTextBox.Foreground = Brushes.Black;
+            EmployeeComboBox.Foreground = Brushes.Black;
+        }
+        else
+        {
+            ProjectBuilder = new ProjectBuilder();
+        }
+
         ControlHelper.RegisterFocusEvents(TitleTextBox);
         ControlHelper.RegisterFocusEvents(StartDateTextBox);
         ControlHelper.RegisterFocusEvents(EndDateTextBox);
@@ -30,10 +57,18 @@ public partial class CreateOrUpdate
 
     public void AddTaskButton_Click(object sender, RoutedEventArgs e)
     {
-        if (ProjectBuilder == null) return;
-        var taskWindow = new CreateTaskWindow(ProjectBuilder);
-        taskWindow.TaskAdded += AddTaskWindow_TaskAdded;
-        taskWindow.Show();
+        if (Project != null)
+        {
+            var taskWindow = new CreateTaskWindow(Project);
+            taskWindow.TaskAddedToProject += AddTaskWindow_TaskAdded;
+            taskWindow.Show();
+        }
+        else if (ProjectBuilder != null)
+        {
+            var taskWindow = new CreateTaskWindow(ProjectBuilder);
+            taskWindow.TaskAddedToBuilder += AddTaskWindow_TaskAdded;
+            taskWindow.Show();
+        }
     }
 
     private void SaveButton_Click(object sender, RoutedEventArgs e)
@@ -45,36 +80,44 @@ public partial class CreateOrUpdate
             var startDate = StartDateTextBox.Text;
             var employee = EmployeeComboBox.SelectedItem as Employee;
             var endDate = EndDateTextBox.Text;
-
-            if (ProjectBuilder == null) return;
             if (employee == null) return;
             if (Window.GetWindow(this) is not ProjectWindow projectWindow) return;
             if (Project != null)
             {
-                // Project.Update(title, startDate, employee, endDate);
-                projectWindow.SendSuccessToast("Projekt wurde erfolgreich aktualisiert.");
+                Project.Update(title, DateTime.Parse(startDate), employee, DateTime.Parse(endDate));
+                projectWindow.SendSuccessToast(Strings.Project_successfully_updated);
             }
-            else
+            else if (ProjectBuilder != null)
             {
                 ProjectBuilder.SetTitle(title);
                 ProjectBuilder.SetStartDate(DateTime.Parse(startDate));
                 ProjectBuilder.SetEndDate(DateTime.Parse(endDate));
                 ProjectBuilder.SetManager(employee);
                 ProjectBuilder.Build();
-                projectWindow.SendSuccessToast("Projekt wurde erfolgreich hinzugefügt.");
+                projectWindow.SendSuccessToast(Strings.Project_successfully_added);
             }
 
             NavigationService?.Navigate(new Index());
         }
         else
         {
-            MessageBox.Show("Alle Felder müssen ausgefüllt sein.");
+            MessageBox.Show(Strings.Please_fill_fields + ": " + Strings.Title + ", " + Strings.Manager 
+                            + ", " + Strings.StartDate + ", " + Strings.EndDate + "."
+                , Strings.Error, MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 
     private void CancelButton_Click(object sender, RoutedEventArgs e)
     {
         NavigationService?.Navigate(new Index());
+    }   
+    
+    private void DeleteTaskButton_Click(object sender, RoutedEventArgs e)
+    {
+        var clickedButton = sender as Button;
+        if (clickedButton?.DataContext is not Task task) return;
+        task.Delete();
+        TasksDataGrid.ItemsSource = Project.GetTasks();
     }
 
     private void AddTaskWindow_TaskAdded(object sender, ProjectBuilder projectBuilder)
@@ -82,6 +125,26 @@ public partial class CreateOrUpdate
         ProjectBuilder = projectBuilder;
         TasksDataGrid.ItemsSource = projectBuilder.TaskBuilders;
         if (Window.GetWindow(this) is not ProjectWindow projectWindow) return;
-        projectWindow.SendSuccessToast("Aufgabe hinzugefügt!");
+        projectWindow.SendSuccessToast(Strings.Task_added);
+    }
+
+    private void AddTaskWindow_TaskAdded(object sender, Project project)
+    {
+        Project = project;
+        TasksDataGrid.ItemsSource = project.GetTasks();
+        if (Window.GetWindow(this) is not ProjectWindow projectWindow) return;
+        projectWindow.SendSuccessToast(Strings.Task_added);
+    }
+
+    private void UpdateUiForLanguageChange()
+    {
+        var culture = Thread.CurrentThread.CurrentCulture;
+        CancelButton.Content = Strings.ResourceManager.GetString("Cancel", culture);
+        SaveButton.Content = Strings.ResourceManager.GetString("Save", culture);
+        TitleLabel.Content = Strings.ResourceManager.GetString("Title", culture);
+        StartDateLabel.Content = Strings.ResourceManager.GetString("StartDate", culture);
+        ManagerLabel.Content = Strings.ResourceManager.GetString("Manager", culture);
+        EndDateLabel.Content = Strings.ResourceManager.GetString("EndDate", culture);
+        AddTaskButton.Content = Strings.ResourceManager.GetString("Add_Task", culture);
     }
 }
