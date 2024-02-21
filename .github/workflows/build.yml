@@ -1,0 +1,27 @@
+name: WPF Build Test
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup MSBuild path
+      uses: microsoft/setup-msbuild@v1.0.2
+
+    - name: Restore NuGet packages
+      run: msbuild -t:restore "Project Management.csproj"
+
+    - name: Build WPF Project
+      run: msbuild "Project Management.csproj" /p:Configuration=Release /p:Platform="Any CPU"
